@@ -8,6 +8,9 @@
 [build.environment]
   # Node version (if needed for build tools later)
   NODE_VERSION = "18"
+  # Ensure devDependencies are installed (vite is a devDependency)
+  NPM_FLAGS = "--include=dev"
+  NPM_CONFIG_PRODUCTION = "false"
 
 # Redirect rules for Single Page Application
 [[redirects]]
@@ -90,6 +93,7 @@
 
 # Environment-specific settings
 [context.production.environment]
+  # Keep default, but dev deps will still be installed due to NPM flags above
   NODE_ENV = "production"
 
 [context.deploy-preview.environment]
