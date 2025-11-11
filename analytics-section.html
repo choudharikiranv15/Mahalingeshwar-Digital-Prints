@@ -1,0 +1,167 @@
+<!-- Analytics Section -->
+<!-- Insert this section BEFORE the Settings Section in admin.html (before line 462) -->
+
+<section id="section-analytics" class="content-section">
+    <div class="section-header">
+        <h1>📈 Analytics & Insights</h1>
+        <p>Comprehensive analytics and business insights</p>
+        <div class="header-actions">
+            <select id="analytics-period" class="form-control">
+                <option value="7">Last 7 Days</option>
+                <option value="30" selected>Last 30 Days</option>
+                <option value="90">Last 90 Days</option>
+                <option value="365">Last Year</option>
+                <option value="all">All Time</option>
+            </select>
+            <button id="refresh-analytics" class="btn btn-primary">
+                🔄 Refresh
+            </button>
+            <button id="export-analytics" class="btn btn-secondary">
+                📥 Export Report
+            </button>
+        </div>
+    </div>
+
+    <!-- Key Metrics Cards -->
+    <div class="analytics-metrics">
+        <div class="metric-card">
+            <div class="metric-icon">💰</div>
+            <div class="metric-details">
+                <h3 id="total-revenue">₹0</h3>
+                <p>Total Revenue</p>
+                <span class="metric-change" id="revenue-change">+0%</span>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">📦</div>
+            <div class="metric-details">
+                <h3 id="total-orders">0</h3>
+                <p>Total Orders</p>
+                <span class="metric-change" id="orders-change">+0%</span>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">👥</div>
+            <div class="metric-details">
+                <h3 id="total-customers">0</h3>
+                <p>Total Customers</p>
+                <span class="metric-change" id="customers-change">+0%</span>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">📊</div>
+            <div class="metric-details">
+                <h3 id="avg-order-value">₹0</h3>
+                <p>Avg Order Value</p>
+                <span class="metric-change" id="aov-change">+0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="analytics-grid">
+        <!-- Revenue Chart -->
+        <div class="analytics-card">
+            <div class="card-header">
+                <h3>📈 Revenue Trend</h3>
+                <button class="btn-icon" onclick="toggleChartView('revenue')">⚙️</button>
+            </div>
+            <div class="card-body">
+                <canvas id="revenue-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Order Status Distribution -->
+        <div class="analytics-card">
+            <div class="card-header">
+                <h3>📦 Order Status</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="order-status-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Top Products -->
+        <div class="analytics-card">
+            <div class="card-header">
+                <h3>🏆 Top Selling Products</h3>
+            </div>
+            <div class="card-body">
+                <div id="top-products-list" class="data-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Performance -->
+        <div class="analytics-card">
+            <div class="card-header">
+                <h3>🏷️ Category Performance</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="category-chart"></canvas>
+            </div>
+        </div>
+
+        <!-- Top Customers -->
+        <div class="analytics-card">
+            <div class="card-header">
+                <h3>⭐ Top Customers</h3>
+            </div>
+            <div class="card-body">
+                <div id="top-customers-list" class="data-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Alerts -->
+        <div class="analytics-card">
+            <div class="card-header">
+                <h3>⚠️ Inventory Alerts</h3>
+            </div>
+            <div class="card-body">
+                <div id="inventory-alerts" class="alerts-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Tables -->
+    <div class="analytics-tables">
+        <!-- Sales Summary Table -->
+        <div class="analytics-card full-width">
+            <div class="card-header">
+                <h3>📊 Sales Summary</h3>
+                <button class="btn-secondary" onclick="exportTable('sales')">Export CSV</button>
+            </div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sales-summary-table">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="analytics-card full-width">
+            <div class="card-header">
+                <h3>🕐 Recent Activity</h3>
+            </div>
+            <div class="card-body">
+                <div id="recent-activity" class="activity-feed">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

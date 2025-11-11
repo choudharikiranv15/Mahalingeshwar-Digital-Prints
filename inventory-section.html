@@ -1,0 +1,320 @@
+<!-- Inventory Management Section -->
+<!-- Insert this section AFTER Analytics Section in admin.html -->
+
+<section id="section-inventory" class="content-section">
+    <div class="section-header">
+        <h1>📦 Inventory Management</h1>
+        <p>Manage your stock levels, track changes, and get alerts</p>
+    </div>
+
+    <!-- Inventory Overview Cards -->
+    <div class="inventory-overview">
+        <div class="overview-card">
+            <div class="card-icon">📊</div>
+            <div class="card-content">
+                <h2 id="total-stock-value">₹0</h2>
+                <p>Total Stock Value</p>
+            </div>
+        </div>
+        <div class="overview-card">
+            <div class="card-icon">📦</div>
+            <div class="card-content">
+                <h2 id="total-stock-units">0</h2>
+                <p>Total Units in Stock</p>
+            </div>
+        </div>
+        <div class="overview-card success">
+            <div class="card-icon">✅</div>
+            <div class="card-content">
+                <h2 id="in-stock-products">0</h2>
+                <p>Products In Stock</p>
+            </div>
+        </div>
+        <div class="overview-card warning">
+            <div class="card-icon">⚠️</div>
+            <div class="card-content">
+                <h2 id="low-stock-products">0</h2>
+                <p>Low Stock Alerts</p>
+            </div>
+        </div>
+        <div class="overview-card danger">
+            <div class="card-icon">🔴</div>
+            <div class="card-content">
+                <h2 id="out-of-stock-products">0</h2>
+                <p>Out of Stock</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions-bar">
+        <button class="btn btn-primary btn-lg" onclick="openQuickStockAdjust()">
+            ➕ Quick Stock Update
+        </button>
+        <button class="btn btn-success btn-lg" onclick="openBulkUpdate()">
+            📋 Bulk Update
+        </button>
+        <button class="btn btn-secondary btn-lg" onclick="viewRestockList()">
+            🔔 View Restock List
+        </button>
+        <button class="btn btn-info btn-lg" onclick="exportInventoryReport()">
+            📥 Export Report
+        </button>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="inventory-tabs">
+        <button class="tab-btn active" data-tab="stock-levels">
+            📊 Stock Levels
+        </button>
+        <button class="tab-btn" data-tab="history">
+            📜 History
+        </button>
+        <button class="tab-btn" data-tab="alerts">
+            🔔 Alerts & Reorder
+        </button>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="inventory-tab-content">
+
+        <!-- Stock Levels Tab -->
+        <div id="tab-stock-levels" class="tab-pane active">
+            <div class="inventory-controls">
+                <input type="text" id="inventory-search" class="form-control" placeholder="🔍 Search products...">
+                <select id="inventory-filter" class="form-control">
+                    <option value="">All Products</option>
+                    <option value="in-stock">In Stock</option>
+                    <option value="low-stock">Low Stock</option>
+                    <option value="out-of-stock">Out of Stock</option>
+                </select>
+                <button class="btn btn-secondary" onclick="loadInventoryData()">🔄 Refresh</button>
+            </div>
+
+            <div class="inventory-table-container">
+                <table class="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Current Stock</th>
+                            <th>Status</th>
+                            <th>Price</th>
+                            <th>Stock Value</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-table-body">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- History Tab -->
+        <div id="tab-history" class="tab-pane">
+            <div class="history-controls">
+                <select id="history-period" class="form-control">
+                    <option value="7">Last 7 Days</option>
+                    <option value="30" selected>Last 30 Days</option>
+                    <option value="90">Last 90 Days</option>
+                </select>
+                <select id="history-type" class="form-control">
+                    <option value="">All Changes</option>
+                    <option value="restock">Restock</option>
+                    <option value="sale">Sales</option>
+                    <option value="adjustment">Adjustments</option>
+                    <option value="return">Returns</option>
+                    <option value="damage">Damage/Loss</option>
+                </select>
+            </div>
+
+            <div class="history-timeline" id="history-timeline">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Alerts Tab -->
+        <div id="tab-alerts" class="tab-pane">
+            <div class="alerts-header">
+                <h3>🔔 Restock Alerts</h3>
+                <p>Products that need to be restocked</p>
+            </div>
+
+            <div class="restock-list" id="restock-list">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <div class="alert-config-section">
+                <h3>⚙️ Configure Stock Alerts</h3>
+                <p>Set up automatic alerts for low stock</p>
+                <button class="btn btn-primary" onclick="openAlertConfiguration()">
+                    Configure Alerts
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Stock Adjustment Modal -->
+<div id="quick-stock-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content modal-md">
+        <div class="modal-header">
+            <h3>➕ Quick Stock Update</h3>
+            <button class="modal-close" onclick="closeQuickStockModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Select Product</label>
+                <select id="quick-product-select" class="form-control">
+                    <option value="">Choose a product...</option>
+                </select>
+            </div>
+
+            <div id="current-stock-display" class="stock-display hidden">
+                <div class="stock-info">
+                    <span class="label">Current Stock:</span>
+                    <span class="value" id="current-stock-value">0</span>
+                </div>
+            </div>
+
+            <div class="adjustment-type-selector">
+                <label>Action</label>
+                <div class="btn-group">
+                    <button class="btn btn-success active" data-action="add">
+                        ➕ Add Stock
+                    </button>
+                    <button class="btn btn-danger" data-action="subtract">
+                        ➖ Remove Stock
+                    </button>
+                    <button class="btn btn-primary" data-action="set">
+                        📝 Set Exact Amount
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="quantity-label">Quantity to Add</label>
+                <input type="number" id="quick-quantity" class="form-control" min="0" value="0">
+            </div>
+
+            <div class="form-group">
+                <label>Reason (Optional)</label>
+                <select id="quick-reason" class="form-control">
+                    <option value="restock">Restock from Supplier</option>
+                    <option value="adjustment">Stock Adjustment</option>
+                    <option value="return">Customer Return</option>
+                    <option value="damage">Damage/Loss</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Notes (Optional)</label>
+                <textarea id="quick-notes" class="form-control" rows="2" placeholder="Add any notes..."></textarea>
+            </div>
+
+            <div class="new-stock-preview hidden">
+                <div class="preview-box">
+                    <span class="label">New Stock Will Be:</span>
+                    <span class="value large" id="new-stock-value">0</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeQuickStockModal()">Cancel</button>
+            <button class="btn btn-primary btn-lg" onclick="saveQuickStockUpdate()">
+                ✅ Update Stock
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Bulk Update Modal -->
+<div id="bulk-update-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content modal-lg">
+        <div class="modal-header">
+            <h3>📋 Bulk Stock Update</h3>
+            <button class="modal-close" onclick="closeBulkUpdateModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="bulk-instructions">
+                <h4>💡 How to use:</h4>
+                <ol>
+                    <li>Select products from the list below</li>
+                    <li>Enter new stock quantity for each</li>
+                    <li>Add a reason for the update</li>
+                    <li>Click "Update All" to save</li>
+                </ol>
+            </div>
+
+            <div class="form-group">
+                <label>Update Reason</label>
+                <select id="bulk-reason" class="form-control">
+                    <option value="restock">Bulk Restock</option>
+                    <option value="adjustment">Inventory Audit</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="bulk-products-list" id="bulk-products-list">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeBulkUpdateModal()">Cancel</button>
+            <button class="btn btn-primary btn-lg" onclick="saveBulkUpdate()">
+                ✅ Update All Selected
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Alert Configuration Modal -->
+<div id="alert-config-modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content modal-md">
+        <div class="modal-header">
+            <h3>⚙️ Configure Stock Alert</h3>
+            <button class="modal-close" onclick="closeAlertConfigModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Select Product</label>
+                <select id="alert-product-select" class="form-control">
+                    <option value="">Choose a product...</option>
+                </select>
+            </div>
+
+            <div class="alert-config-visual">
+                <div class="config-item">
+                    <label>🔔 Alert When Stock Falls Below</label>
+                    <input type="number" id="reorder-point" class="form-control" value="10" min="0">
+                    <small>We'll notify you when stock reaches this level</small>
+                </div>
+
+                <div class="config-item">
+                    <label>📦 Suggested Reorder Quantity</label>
+                    <input type="number" id="reorder-quantity" class="form-control" value="50" min="1">
+                    <small>How many units to reorder</small>
+                </div>
+
+                <div class="config-item">
+                    <label>Enable Alert</label>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="alert-enabled" checked>
+                        <label for="alert-enabled">Alert Enabled</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeAlertConfigModal()">Cancel</button>
+            <button class="btn btn-primary btn-lg" onclick="saveAlertConfig()">
+                ✅ Save Alert Settings
+            </button>
+        </div>
+    </div>
+</div>

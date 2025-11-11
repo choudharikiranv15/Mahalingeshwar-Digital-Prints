@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahalingeshwar Digital Prints & Gifts - Premium Ecommerce Store</title>
+    <meta name="description" content="Premium digital printing services and personalized gifts. Shop custom photo prints, mugs, business cards, canvas art with special offers and same-day delivery in Bangalore.">
+    <meta name="keywords" content="digital printing, custom gifts, photo prints, business cards, canvas prints, bulk orders, bangalore printing, personalized mugs">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body data-theme="light">
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <div class="logo-animation">
+                <div class="logo-letter">M</div>
+                <div class="logo-text">Loading Store...</div>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+
+    <!-- 3D Background -->
+    <div class="hero-3d-background">
+        <div class="floating-shape shape-1">📄</div>
+        <div class="floating-shape shape-2">🖼️</div>
+        <div class="floating-shape shape-3">☕</div>
+        <div class="floating-shape shape-4">👕</div>
+        <div class="floating-shape shape-5">💼</div>
+        <div class="floating-shape shape-6">🎨</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">M</span>
+                <span class="logo-text">Mahalingeshwar Digital Prints</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#offers" class="nav-link">Offers</a>
+                <a href="#products" class="nav-link">Products</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#testimonials" class="nav-link">Reviews</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search products..." id="search-input">
+                    <button class="search-btn" id="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <button class="cart-icon" id="cart-toggle">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+                <button id="theme-toggle" class="theme-toggle">
+                    <div class="toggle-track">
+                        <div class="toggle-thumb">
+                            <span class="toggle-icon sun-icon">☀️</span>
+                            <span class="toggle-icon moon-icon">🌙</span>
+                        </div>
+                    </div>
+                </button>
+                <button class="nav-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Mahalingeshwar Digital Prints & Gifts</h1>
+                <p class="hero-tagline">Your Vision, Our Precision</p>
+                <p class="hero-description">
+                    Premium digital printing services and personalized gifts with cutting-edge technology since 2020
+                </p>
+                <div class="hero-buttons">
+                    <a href="#offers" class="btn btn-primary">
+                        <i class="fas fa-tags"></i>
+                        View Special Offers
+                    </a>
+                    <a href="#products" class="btn btn-secondary">
+                        <i class="fas fa-shopping-bag"></i>
+                        Shop Products
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers Section -->
+    <section id="offers" class="offers-section">
+        <div class="container">
+            <h2 class="section-title">Special Offers</h2>
+            <p class="section-subtitle">Limited time deals and amazing discounts on all products</p>
+            <div class="offers-grid" id="offers-grid">
+                <!-- Offers will be loaded here -->
+            </div>
+            <div class="offers-cta">
+                <p class="offers-note">*Terms and conditions apply. Offers valid till stock lasts.</p>
+                <button class="btn-whatsapp-offer" onclick="contactForOffers()">
+                    <i class="fab fa-whatsapp"></i>
+                    Get Best Deal on WhatsApp
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Showcase -->
+    <section class="category-showcase">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <p class="section-subtitle">Discover our wide range of premium printing services</p>
+            <div class="category-grid" id="category-grid">
+                <!-- Categories will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="products" class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <p class="section-subtitle">Our most popular items with amazing quality and great prices</p>
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2 class="section-title">Our Premium Services</h2>
+            <div class="services-grid" id="services-grid">
+                <!-- Services will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-grid" id="testimonials-grid">
+                <!-- Testimonials will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-cards">
+                    <div class="contact-card phone-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Call Us</h4>
+                            <p>+91 9876543210</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card whatsapp-card">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>WhatsApp</h4>
+                            <p>+91 76191 47647</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card email-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Email Us</h4>
+                            <p>info@mahalingeshwarprints.com</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <h3>Ready to Get Started?</h3>
+                    <p>Contact us today for a free consultation and quote!</p>
+                    <button class="btn-cta" onclick="openWhatsAppContact()">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp Us Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beautiful Aesthetic Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Section -->
+                <div class="footer-section company-section">
+                    <div class="footer-logo">
+                        <div class="logo-icon">M</div>
+                        <div class="logo-text">
+                            <h3>Mahalingeshwar</h3>
+                            <p class="tagline">Your Vision, Our Precision</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">
+                        Premium digital printing services and personalized gifts with cutting-edge technology since 2020. We specialize in high-quality custom printing solutions.
+                    </p>
+                    <div class="footer-certifications">
+                        <span class="cert-badge">📜 ISO 9001:2015</span>
+                        <span class="cert-badge">✅ GST Registered</span>
+                        <span class="cert-badge">🏆 Since 2020</span>
+                    </div>
+                </div>
+                
+                <!-- Quick Links Section -->
+                <div class="footer-section links-section">
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#offers"><i class="fas fa-tags"></i> Special Offers</a></li>
+                        <li><a href="#products"><i class="fas fa-shopping-bag"></i> Products</a></li>
+                        <li><a href="#services"><i class="fas fa-cogs"></i> Services</a></li>
+                        <li><a href="#testimonials"><i class="fas fa-star"></i> Reviews</a></li>
+                        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                    <div class="footer-policies">
+                        <a href="#" class="policy-link">Privacy Policy</a>
+                        <a href="#" class="policy-link">Terms of Service</a>
+                        <a href="#" class="policy-link">Return Policy</a>
+                    </div>
+                </div>
+                
+                <!-- Contact Info Section -->
+                <div class="footer-section contact-section">
+                    <h4 class="footer-heading">Contact Information</h4>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-text">
+                                <strong>Visit Us</strong>
+                                <p>123 Digital Plaza, MG Road<br>Bangalore, Karnataka 560001</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div class="contact-text">
+                                <strong>Call Us</strong>
+                                <p>+91 9876543210</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <div class="contact-text">
+                                <strong>WhatsApp</strong>
+                                <p>+91 76191 47647</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-text">
+                                <strong>Email</strong>
+                                <p>info@mahalingeshwarprints.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="contact-text">
+                                <strong>Business Hours</strong>
+                                <p>Mon-Sat: 9AM-8PM<br>Sunday: 10AM-6PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Newsletter & Social Section -->
+                <div class="footer-section social-section">
+                    <h4 class="footer-heading">Stay Connected</h4>
+                    <p class="social-description">Follow us for latest updates, offers, and printing tips!</p>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link instagram-link">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="#" class="social-link facebook-link">
+                            <i class="fab fa-facebook"></i>
+                            <span>Facebook</span>
+                        </a>
+                        <a href="#" class="social-link linkedin-link">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="https://wa.me/917619147647" class="social-link whatsapp-link">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp</span>
+                        </a>
+                    </div>
+                    
+                    <div class="newsletter">
+                        <h5>Newsletter Signup</h5>
+                        <p>Get exclusive offers and printing tips directly to your inbox!</p>
+                        <div class="newsletter-form">
+                            <input type="email" class="newsletter-input" placeholder="Enter your email address">
+                            <button class="newsletter-btn">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                        <p>&copy; 2024 Mahalingeshwar Digital Prints & Gifts. All rights reserved.</p>
+                    </div>
+                    <div class="payment-methods">
+                        <span class="payment-text">We Accept:</span>
+                        <i class="fas fa-credit-card"></i>
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                </div>
+                <div class="developer-credits">
+                    Built with ❤️ by <a href="https://www.linkedin.com/in/kiranchoudhari-1510m" target="_blank">Kiran Choudhari</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">Shopping Cart</h3>
+            <button class="cart-close" id="cart-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total: </span>
+                <span id="cart-total">₹0</span>
+            </div>
+            <button class="btn-checkout" onclick="showCustomerForm()">
+                <i class="fas fa-shopping-bag"></i>
+                Place Order
+            </button>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Customer Details Form Modal -->
+    <div class="modal-overlay" id="customer-form-overlay">
+        <div class="customer-form-modal" id="customer-form-modal">
+            <div class="form-header">
+                <h3>Customer Details</h3>
+                <p>Please provide your details to complete the order</p>
+                <button class="form-close" onclick="hideCustomerForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form class="customer-form" id="customer-form">
+                <div class="form-group">
+                    <label for="customer-name">Full Name *</label>
+                    <input type="text" id="customer-name" name="name" required placeholder="Enter your full name">
+                    <span class="error-message" id="name-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-phone">Phone Number *</label>
+                    <input type="tel" id="customer-phone" name="phone" required placeholder="Enter your phone number">
+                    <span class="error-message" id="phone-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-email">Email Address *</label>
+                    <input type="email" id="customer-email" name="email" required placeholder="Enter your email address">
+                    <span class="error-message" id="email-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-address">Delivery Address *</label>
+                    <textarea id="customer-address" name="address" required placeholder="Enter your complete delivery address" rows="3"></textarea>
+                    <span class="error-message" id="address-error"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-instructions">Special Instructions</label>
+                    <textarea id="customer-instructions" name="instructions" placeholder="Any special requirements or instructions (optional)" rows="2"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="hideCustomerForm()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn-submit">
+                        <i class="fab fa-whatsapp"></i>
+                        Place Order on WhatsApp
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

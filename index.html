@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahalingeshwar Digital Prints & Gifts - Premium Printing Services</title>
+    <meta name="description" content="Premium digital printing services and personalized gifts with cutting-edge technology since 2020. Custom photo prints, mugs, t-shirts, business cards, and more.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="wishlist-styles.css">
+
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body data-theme="light">
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <div class="logo-animation">
+                <div class="logo-letter">M</div>
+                <div class="logo-text">Mahalingeshwar</div>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <div class="loading-percentage">0%</div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+
+    <!-- 3D Animated Background -->
+    <div class="hero-3d-background">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+        <div class="floating-shape shape-6"></div>
+    </div>
+
+    <!-- Enhanced Navigation -->
+    <nav class="navbar curved-floating-nav">
+        <div class="nav-container">
+            <div class="nav-logo" id="nav-home">
+                <span class="logo-icon">M</span>
+                <span class="logo-text">Mahalingeshwar Digital Prints</span>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link" data-route="home">Home</a>
+                <a href="#products" class="nav-link" data-route="products">Products</a>
+                <a href="#about" class="nav-link" data-route="about">About</a>
+                <a href="#contact" class="nav-link" data-route="contact">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <div class="search-container">
+                    <input type="text" id="search-input" class="search-input" placeholder="Search products...">
+                    <button id="search-btn" class="search-btn">🔍</button>
+                </div>
+                <div class="wishlist-indicator" id="wishlist-indicator">
+                    <span class="wishlist-icon">❤️</span>
+                    <span class="wishlist-count" id="wishlist-count">0</span>
+                </div>
+                <div class="cart-indicator" id="cart-indicator">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon sun-icon">☀️</span>
+                    <span class="theme-icon moon-icon">🌙</span>
+                </button>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Customer Order Form Modal -->
+    <div id="customer-modal" class="modal hidden">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Customer Details</h3>
+                <button id="close-modal" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="customer-form">
+                    <div class="form-section">
+                        <h4>Contact Information</h4>
+                        <div class="form-group">
+                            <label class="form-label" for="customer-name">Full Name *</label>
+                            <input type="text" id="customer-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="customer-phone">Phone Number *</label>
+                            <input type="tel" id="customer-phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="customer-email">Email Address *</label>
+                            <input type="email" id="customer-email" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-section">
+                        <h4>Delivery Address</h4>
+                        <div class="form-group">
+                            <label class="form-label" for="customer-address">Complete Address *</label>
+                            <textarea id="customer-address" class="form-control" rows="3" required placeholder="House/Flat No., Street, Area, City, State, PIN Code"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-section">
+                        <h4>Special Instructions (Optional)</h4>
+                        <div class="form-group">
+                            <label class="form-label" for="special-instructions">Any special requirements?</label>
+                            <textarea id="special-instructions" class="form-control" rows="2" placeholder="Design preferences, delivery notes, etc."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn--secondary" id="cancel-order">Cancel</button>
+                <button type="button" class="btn btn--primary" id="submit-order">Send WhatsApp Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal hidden">
+        <div class="modal-backdrop" id="wishlist-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>❤️ My Wishlist</h3>
+                <button id="close-wishlist-modal" class="modal-close">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="wishlist-items" class="wishlist-items">
+                    <!-- Wishlist items will be populated by JavaScript -->
+                </div>
+                <div id="wishlist-empty" class="wishlist-empty hidden">
+                    <div style="text-align: center; padding: 3rem;">
+                        <p style="font-size: 3rem; margin-bottom: 1rem;">💔</p>
+                        <h4 style="margin-bottom: 0.5rem;">Your wishlist is empty</h4>
+                        <p style="color: var(--color-text-secondary);">Start adding products you love!</p>
+                        <button class="btn btn--primary" id="close-empty-wishlist" style="margin-top: 1rem;">Browse Products</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn--secondary" id="clear-wishlist-btn">Clear All</button>
+                <button type="button" class="btn btn--primary" id="wishlist-to-cart-btn">Add All to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main id="app-content" class="app-content">
+        <!-- Homepage -->
+        <section id="page-home" class="page home-page active">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Mahalingeshwar Digital Prints & Gifts</h1>
+                    <p class="hero-subtitle">Your Vision, Our Precision - Transform your memories into beautiful keepsakes with our cutting-edge printing technology</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn--primary btn--lg" data-route="products">Explore Products</button>
+                        <a href="https://wa.me/917619147647?text=Hi! I'm interested in your digital printing services." target="_blank" class="btn btn--secondary btn--lg">
+                            <span class="whatsapp-icon">📱</span>
+                            WhatsApp Inquiry
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Offers Section -->
+            <div class="offers-section">
+                <div class="container">
+                    <h2 class="section-title">Special Offers</h2>
+                    <div class="offers-grid" id="offers-grid">
+                        <!-- Offers will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Categories Section -->
+            <div class="categories-section">
+                <div class="container">
+                    <h2 class="section-title">Shop by Category</h2>
+                    <div class="categories-grid" id="categories-grid">
+                        <!-- Categories will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Products Section -->
+            <div class="featured-products">
+                <div class="container">
+                    <h2 class="section-title">Featured Products</h2>
+                    <div class="products-grid" id="featured-products-grid">
+                        <!-- Featured products will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div class="services-section">
+                <div class="container">
+                    <h2 class="section-title">Our Services</h2>
+                    <div class="services-grid" id="services-grid">
+                        <!-- Services will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonials Section -->
+            <div class="testimonials-section">
+                <div class="container">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <h2 class="section-title" style="margin-bottom: 0;">What Our Customers Say</h2>
+                        <a href="submit-review.html" class="btn btn-primary" style="text-decoration: none;">
+                            ⭐ Leave a Review
+                        </a>
+                    </div>
+                    <div class="testimonials-slider" id="testimonials-slider">
+                        <!-- Testimonials will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Page -->
+        <section id="page-products" class="page products-page">
+            <div class="container">
+                <div class="page-header">
+                    <h1 class="page-title">Our Products</h1>
+                    <div class="products-controls">
+                        <div class="filters-container">
+                            <select id="category-filter" class="form-control">
+                                <option value="">All Categories</option>
+                            </select>
+                            <select id="price-filter" class="form-control">
+                                <option value="">All Prices</option>
+                                <option value="0-100">₹0 - ₹100</option>
+                                <option value="100-500">₹100 - ₹500</option>
+                                <option value="500-1000">₹500 - ₹1000</option>
+                                <option value="1000+">₹1000+</option>
+                            </select>
+                            <select id="sort-filter" class="form-control">
+                                <option value="name">Sort by Name</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Highest Rated</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="products-grid" id="all-products-grid">
+                    <!-- All products will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Detail Page -->
+        <section id="page-product-detail" class="page product-detail-page">
+            <div class="container">
+                <div id="product-detail-content">
+                    <!-- Product details will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Cart Page -->
+        <section id="page-cart" class="page cart-page">
+            <div class="container">
+                <h1 class="page-title">Shopping Cart</h1>
+                <div class="cart-content">
+                    <div class="cart-items" id="cart-items">
+                        <!-- Cart items will be populated by JavaScript -->
+                    </div>
+                    <div class="cart-summary" id="cart-summary">
+                        <!-- Cart summary will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Page -->
+        <section id="page-about" class="page about-page">
+            <div class="container">
+                <h1 class="page-title">About Us</h1>
+                <div class="about-content">
+                    <div class="about-info">
+                        <h2>Mahalingeshwar Digital Prints & Gifts</h2>
+                        <p class="tagline">Your Vision, Our Precision</p>
+                        <p>Premium digital printing services and personalized gifts with cutting-edge technology since 2020. We specialize in high-quality custom printing solutions for businesses and individuals.</p>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">500+</div>
+                                <div class="stat-label">Happy Customers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1000+</div>
+                                <div class="stat-label">Orders Completed</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">5⭐</div>
+                                <div class="stat-label">Average Rating</div>
+                            </div>
+                        </div>
+
+                        <div class="services-info">
+                            <h3>Our Services</h3>
+                            <ul>
+                                <li>🎨 Free Design Consultation</li>
+                                <li>🚀 Express Delivery Options</li>
+                                <li>📦 Bulk Order Discounts</li>
+                                <li>✅ 100% Quality Guarantee</li>
+                                <li>🛡️ Secure Payment Processing</li>
+                                <li>📞 24/7 Customer Support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="page-contact" class="page contact-page">
+            <div class="container">
+                <h1 class="page-title">Contact Us</h1>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div class="contact-details">
+                                <h4>Phone</h4>
+                                <p>+91 9483348559<br>+91 7619147647</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <p>info@mahalingeshwarprints.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-details">
+                                <h4>WhatsApp</h4>
+                                <p>+91 76191 47647</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-details">
+                                <h4>Address</h4>
+                                <p>Near Karnataka Bank<br>Pandarpur Road, Chadchan</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">🕒</div>
+                            <div class="contact-details">
+                                <h4>Business Hours</h4>
+                                <p>Mon-Sat: 10:00 AM - 7:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-cta">
+                        <h3>Ready to Get Started?</h3>
+                        <p>Contact us today for a free consultation and quote for all your printing needs!</p>
+                        <a href="https://wa.me/917619147647?text=Hi! I'd like to get a quote for printing services." target="_blank" class="btn btn--primary btn--lg">
+                            <span class="whatsapp-icon">📱</span>
+                            WhatsApp Us Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- BEAUTIFUL FOOTER - As per requirements -->
+    <footer class="footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        
+        <div class="container">
+            <div class="footer-content">
+                <!-- Column 1: Company Branding -->
+                <div class="footer-section brand-section">
+                    <div class="footer-logo">
+                        <span class="logo-icon">M</span>
+                        <span class="logo-text">Mahalingeshwar Digital Prints</span>
+                    </div>
+                    <p class="brand-tagline">Your Vision, Our Precision</p>
+                    <p class="brand-description">Premium digital printing services and personalized gifts with cutting-edge technology. We turn your vision into reality with precision and care since 2020.</p>
+                    
+                    <div class="certifications">
+                        <div class="cert-item">✅ GST Registered</div>
+                        <div class="cert-item">✅ Quality Printing Services</div>
+                    </div>
+                    
+                    <div class="footer-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Happy Customers</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1000+</div>
+                            <div class="stat-label">Orders Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5⭐</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Quick Links -->
+                <div class="footer-section quick-links-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home" data-route="home">🏠 Home</a></li>
+                        <li><a href="#products" data-route="products">🛍️ Offers</a></li>
+                        <li><a href="#products" data-route="products">📦 Products</a></li>
+                        <li><a href="#about" data-route="about">🔧 Services</a></li>
+                        <li><a href="#testimonials">⭐ Reviews</a></li>
+                        <li><a href="#contact" data-route="contact">📞 Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Contact Information -->
+                <div class="footer-section contact-section">
+                    <h4>Contact Information</h4>
+                    <div class="footer-contact">
+                        <div class="contact-info-item">
+                            <span class="contact-icon">📍</span>
+                            <div class="contact-text">
+                                <strong>Address:</strong><br>
+                                Near Karnataka Bank<br>
+                                Pandarpur Road, Chadchan
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="contact-icon">📞</span>
+                            <div class="contact-text">
+                                <strong>Phone:</strong><br>
+                                +91 9483348559<br>
+                                +91 7619147647
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="contact-icon">📱</span>
+                            <div class="contact-text">
+                                <strong>WhatsApp:</strong><br>
+                                +91 76191 47647
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="contact-icon">📧</span>
+                            <div class="contact-text">
+                                <strong>Email:</strong><br>
+                                info@mahalingeshwarprints.com
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="contact-icon">🕒</span>
+                            <div class="contact-text">
+                                <strong>Business Hours:</strong><br>
+                                Mon-Sat: 10:00 AM - 7:00 PM
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 4: Social Media -->
+                <div class="footer-section social-section">
+                    <h4>Connect With Us</h4>
+                    <div class="social-links">
+                        <a href="https://wa.me/917619147647" target="_blank" class="social-link whatsapp" title="WhatsApp">
+                            <span class="social-icon">📞</span>
+                        </a>
+                        <a href="https://www.instagram.com/mahalingeshwardigital?igsh=d3l1aW14cmEybmF6" target="_blank" class="social-link instagram" title="Instagram">
+                            <svg class="social-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        <a href="#" target="_blank" class="social-link facebook" title="Facebook">
+                            <span class="social-icon">f</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="footer-developer">
+                        <p>Made with <span class="heart">❤️</span> by <a href="https://www.linkedin.com/in/kiranchoudhari-1510m" target="_blank" class="developer-name">Kiran Choudhari</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/917619147647?text=Hi! I'm interested in your services." target="_blank" class="whatsapp-float">
+        <span class="whatsapp-icon">📱</span>
+    </a>
+
+    <!-- Configuration -->
+    <script src="config.js"></script>
+    <!-- Supabase Service Layer -->
+    <script src="supabase-service.js"></script>
+    <!-- Wishlist Module -->
+    <script src="wishlist.js"></script>
+    <!-- Wishlist UI Enhancer -->
+    <script src="wishlist-ui-enhancer.js"></script>
+    <!-- Main Application -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Mahalingeshwar Digital Prints</title>
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="analytics-styles.css">
+    <link rel="stylesheet" href="inventory-styles.css">
+</head>
+<body data-theme="light">
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="logo">
+                    <span class="logo-icon">M</span>
+                    <span class="logo-text">Mahalingeshwar</span>
+                </div>
+                <h1>Admin Dashboard</h1>
+                <p>Login to manage your products</p>
+            </div>
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" class="form-control" required placeholder="admin@mahalingeshwar.com">
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" class="form-control" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <p class="login-hint">💡 Enter your admin credentials to continue</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="dashboard hidden">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-icon">M</span>
+                    <span class="logo-text">Mahalingeshwar Admin</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="icon-btn" title="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <div class="admin-profile">
+                    <span class="admin-name" id="admin-name">Admin</span>
+                    <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="#products" class="nav-item" data-section="products">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Products</span>
+                </a>
+                <a href="#add-product" class="nav-item" data-section="add-product">
+                    <span class="nav-icon">➕</span>
+                    <span class="nav-text">Add Product</span>
+                </a>
+                <a href="#categories" class="nav-item" data-section="categories">
+                    <span class="nav-icon">🏷️</span>
+                    <span class="nav-text">Categories</span>
+                </a>
+                <a href="#offers" class="nav-item" data-section="offers">
+                    <span class="nav-icon">🎁</span>
+                    <span class="nav-text">Offers</span>
+                </a>
+                <a href="#orders" class="nav-item" data-section="orders">
+                    <span class="nav-icon">🛒</span>
+                    <span class="nav-text">Orders</span>
+                </a>
+                <a href="#analytics" class="nav-item" data-section="analytics">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-text">Analytics</span>
+                </a>
+                <a href="#inventory" class="nav-item" data-section="inventory">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Inventory</span>
+                </a>
+                <a href="#reviews" class="nav-item" data-section="reviews">
+                    <span class="nav-icon">⭐</span>
+                    <span class="nav-text">Reviews</span>
+                </a>
+                <a href="#settings" class="nav-item" data-section="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="section-dashboard" class="content-section active">
+                <div class="section-header">
+                    <h1>Dashboard Overview</h1>
+                    <p>Welcome back! Here's what's happening with your store.</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">📦</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="total-products">0</div>
+                            <div class="stat-label">Total Products</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">🛒</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="total-orders">0</div>
+                            <div class="stat-label">Total Orders</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">⭐</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="featured-products">0</div>
+                            <div class="stat-label">Featured Products</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">🏷️</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="total-categories">5</div>
+                            <div class="stat-label">Categories</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <h2>Quick Actions</h2>
+                    <div class="action-cards">
+                        <button class="action-card" onclick="navigateToSection('add-product')">
+                            <span class="action-icon">➕</span>
+                            <span class="action-text">Add New Product</span>
+                        </button>
+                        <button class="action-card" onclick="navigateToSection('products')">
+                            <span class="action-icon">📝</span>
+                            <span class="action-text">Manage Products</span>
+                        </button>
+                        <button class="action-card" onclick="navigateToSection('orders')">
+                            <span class="action-icon">📊</span>
+                            <span class="action-text">View Orders</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="section-products" class="content-section">
+                <div class="section-header">
+                    <h1>Manage Products</h1>
+                    <div class="header-actions">
+                        <input type="text" id="search-products" class="search-input" placeholder="Search products...">
+                        <button class="btn btn-primary" onclick="navigateToSection('add-product')">
+                            <span>➕</span> Add New Product
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="products-table" id="products-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Featured</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <!-- Products will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Add/Edit Product Section -->
+            <section id="section-add-product" class="content-section">
+                <div class="section-header">
+                    <h1 id="product-form-title">Add New Product</h1>
+                    <button class="btn btn-secondary" onclick="resetProductForm()">Clear Form</button>
+                </div>
+
+                <form id="product-form" class="product-form">
+                    <input type="hidden" id="edit-product-uuid">
+
+                    <div class="form-row">
+                        <div class="form-col-2">
+                            <div class="form-group">
+                                <label for="product-id">Product ID *</label>
+                                <input type="text" id="product-id" class="form-control" required placeholder="e.g., custom-mug">
+                                <small>Unique identifier (lowercase, use hyphens)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-name">Product Name *</label>
+                                <input type="text" id="product-name" class="form-control" required placeholder="e.g., Custom Printed Mug">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-col-3">
+                            <div class="form-group">
+                                <label for="product-category">Category *</label>
+                                <select id="product-category" class="form-control" required>
+                                    <option value="">Select Category</option>
+                                    <option value="digital-printing">Digital Printing</option>
+                                    <option value="personalized-gifts">Personalized Gifts</option>
+                                    <option value="business-materials">Business Materials</option>
+                                    <option value="canvas-wall-art">Canvas & Wall Art</option>
+                                    <option value="custom-apparel">Custom Apparel</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-price">Price (₹) *</label>
+                                <input type="number" id="product-price" class="form-control" required min="0" step="0.01" placeholder="299">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-original-price">Original Price (₹)</label>
+                                <input type="number" id="product-original-price" class="form-control" min="0" step="0.01" placeholder="399">
+                                <small>Leave empty if no discount</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-description">Description *</label>
+                        <textarea id="product-description" class="form-control" rows="4" required placeholder="Detailed product description..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-col-3">
+                            <div class="form-group">
+                                <label for="product-icon">Icon/Emoji</label>
+                                <input type="text" id="product-icon" class="form-control" placeholder="📦" maxlength="2">
+                                <small>Single emoji for product icon</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-rating">Rating (0-5)</label>
+                                <input type="number" id="product-rating" class="form-control" min="0" max="5" step="0.1" value="4.5">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-reviews">Number of Reviews</label>
+                                <input type="number" id="product-reviews" class="form-control" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-col-3">
+                            <div class="form-group">
+                                <label for="product-stock">Stock Quantity *</label>
+                                <input type="number" id="product-stock" class="form-control" required min="0" value="100">
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="product-in-stock" checked>
+                                    <span>In Stock</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="product-featured">
+                                    <span>Featured Product</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-tags">Tags</label>
+                        <input type="text" id="product-tags" class="form-control" placeholder="gift, custom, personalized">
+                        <small>Comma-separated tags for search</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-colors">Available Colors</label>
+                        <input type="text" id="product-colors" class="form-control" placeholder="White, Black, Blue">
+                        <small>Comma-separated color options</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-sizes">Available Sizes</label>
+                        <input type="text" id="product-sizes" class="form-control" placeholder="S, M, L, XL">
+                        <small>Comma-separated size options</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-image">Product Image</label>
+                        <input type="file" id="product-image" class="form-control" accept="image/*">
+                        <small>Upload product image (optional - will use icon if not uploaded)</small>
+                        <div id="image-preview" class="image-preview"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-lg" id="submit-product-btn">
+                            <span id="submit-btn-text">Add Product</span>
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-lg" onclick="resetProductForm()">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Categories Section -->
+            <section id="section-categories" class="content-section">
+                <div class="section-header">
+                    <h1>Manage Categories</h1>
+                </div>
+                <div class="categories-grid" id="categories-grid">
+                    <!-- Categories will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Offers Section -->
+            <section id="section-offers" class="content-section">
+                <div class="section-header">
+                    <h1>Manage Offers</h1>
+                    <button class="btn btn-primary" onclick="showAddOfferModal()">
+                        <span>➕</span> Add New Offer
+                    </button>
+                </div>
+
+                <div class="offers-grid-admin" id="offers-grid-admin">
+                    <!-- Offers will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Add/Edit Offer Modal -->
+            <div id="offer-modal" class="modal hidden">
+                <div class="modal-backdrop" onclick="closeOfferModal()"></div>
+                <div class="modal-content" style="max-width: 900px; width: 90%;">
+                    <div class="modal-header">
+                        <h3 id="offer-modal-title">Add New Offer</h3>
+                        <button onclick="closeOfferModal()" class="modal-close">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="offer-form">
+                            <input type="hidden" id="edit-offer-id">
+
+                            <div class="form-group">
+                                <label for="offer-title">Offer Title *</label>
+                                <input type="text" id="offer-title" class="form-control" required placeholder="e.g., 30% OFF Bulk Orders">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="offer-description">Description *</label>
+                                <textarea id="offer-description" class="form-control" rows="3" required placeholder="Detailed description of the offer"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="offer-icon">Icon/Emoji *</label>
+                                <input type="text" id="offer-icon" class="form-control" required placeholder="📦" maxlength="2">
+                                <small>Single emoji for the offer icon</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="offer-active" checked>
+                                    <span>Active (Show on website)</span>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeOfferModal()">Cancel</button>
+                        <button class="btn btn-primary" onclick="saveOffer()" id="save-offer-btn">Save Offer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <section id="section-orders" class="content-section">
+                <div class="section-header">
+                    <h1>Customer Orders</h1>
+                    <div class="header-actions">
+                        <select id="order-status-filter" class="form-control" style="width: auto;">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                        <input type="text" id="search-orders" class="search-input" placeholder="Search orders...">
+                        <button class="btn btn-secondary" onclick="loadOrders()">
+                            <span>🔄</span> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="orders-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value" id="orders-total">0</div>
+                        <div class="stat-mini-label">Total Orders</div>
+                    </div>
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value" id="orders-pending">0</div>
+                        <div class="stat-mini-label">Pending</div>
+                    </div>
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value" id="orders-confirmed">0</div>
+                        <div class="stat-mini-label">Confirmed</div>
+                    </div>
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value" id="orders-completed">0</div>
+                        <div class="stat-mini-label">Completed</div>
+                    </div>
+                    <div class="stat-mini-card">
+                        <div class="stat-mini-value" id="orders-revenue">₹0</div>
+                        <div class="stat-mini-label">Total Revenue</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Contact</th>
+                                <th>Items</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <!-- Orders will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Order Detail Modal -->
+            <div id="order-detail-modal" class="modal hidden">
+                <div class="modal-backdrop" onclick="closeOrderModal()"></div>
+                <div class="modal-content" style="max-width: 800px;">
+                    <div class="modal-header">
+                        <h3>Order Details</h3>
+                        <button onclick="closeOrderModal()" class="modal-close">×</button>
+                    </div>
+                    <div class="modal-body" id="order-detail-content">
+                        <!-- Order details will be loaded here -->
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeOrderModal()">Close</button>
+                        <button class="btn btn-primary" onclick="updateOrderStatus()" id="update-status-btn">Update Status</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <section id="section-analytics" class="content-section">
+                <div class="section-header">
+                    <h1>📈 Analytics & Insights</h1>
+                    <p>Comprehensive analytics and business insights</p>
+                    <div class="header-actions">
+                        <select id="analytics-period" class="form-control">
+                            <option value="7">Last 7 Days</option>
+                            <option value="30" selected>Last 30 Days</option>
+                            <option value="90">Last 90 Days</option>
+                            <option value="365">Last Year</option>
+                            <option value="all">All Time</option>
+                        </select>
+                        <button id="refresh-analytics" class="btn btn-primary">
+                            🔄 Refresh
+                        </button>
+                        <button id="export-analytics" class="btn btn-secondary">
+                            📥 Export Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Key Metrics Cards -->
+                <div class="analytics-metrics">
+                    <div class="metric-card">
+                        <div class="metric-icon">💰</div>
+                        <div class="metric-details">
+                            <h3 id="total-revenue">₹0</h3>
+                            <p>Total Revenue</p>
+                            <span class="metric-change" id="revenue-change">+0%</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📦</div>
+                        <div class="metric-details">
+                            <h3 id="total-orders">0</h3>
+                            <p>Total Orders</p>
+                            <span class="metric-change" id="orders-change">+0%</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">👥</div>
+                        <div class="metric-details">
+                            <h3 id="total-customers">0</h3>
+                            <p>Total Customers</p>
+                            <span class="metric-change" id="customers-change">+0%</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">📊</div>
+                        <div class="metric-details">
+                            <h3 id="avg-order-value">₹0</h3>
+                            <p>Avg Order Value</p>
+                            <span class="metric-change" id="aov-change">+0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="analytics-grid">
+                    <!-- Revenue Chart -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>📈 Revenue Trend</h3>
+                            <button class="btn-icon" onclick="toggleChartView('revenue')">⚙️</button>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="revenue-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Order Status Distribution -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>📦 Order Status</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="order-status-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Top Products -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>🏆 Top Selling Products</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="top-products-list" class="data-list">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Performance -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>🏷️ Category Performance</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="category-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Top Customers -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>⭐ Top Customers</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="top-customers-list" class="data-list">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventory Alerts -->
+                    <div class="analytics-card">
+                        <div class="card-header">
+                            <h3>⚠️ Inventory Alerts</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="inventory-alerts" class="alerts-list">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Tables -->
+                <div class="analytics-tables">
+                    <!-- Sales Summary Table -->
+                    <div class="analytics-card full-width">
+                        <div class="card-header">
+                            <h3>📊 Sales Summary</h3>
+                            <button class="btn-secondary" onclick="exportTable('sales')">Export CSV</button>
+                        </div>
+                        <div class="card-body">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Value</th>
+                                        <th>Change</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sales-summary-table">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="analytics-card full-width">
+                        <div class="card-header">
+                            <h3>🕐 Recent Activity</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="recent-activity" class="activity-feed">
+                                <!-- Will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inventory Management Section -->
+            <section id="section-inventory" class="content-section">
+                <div class="section-header">
+                    <h1>📦 Inventory Management</h1>
+                    <p>Manage your stock levels, track changes, and get alerts</p>
+                </div>
+
+                <!-- Inventory Overview Cards -->
+                <div class="inventory-overview">
+                    <div class="overview-card">
+                        <div class="card-icon">📊</div>
+                        <div class="card-content">
+                            <h2 id="total-stock-value">₹0</h2>
+                            <p>Total Stock Value</p>
+                        </div>
+                    </div>
+                    <div class="overview-card">
+                        <div class="card-icon">📦</div>
+                        <div class="card-content">
+                            <h2 id="total-stock-units">0</h2>
+                            <p>Total Units in Stock</p>
+                        </div>
+                    </div>
+                    <div class="overview-card success">
+                        <div class="card-icon">✅</div>
+                        <div class="card-content">
+                            <h2 id="in-stock-products">0</h2>
+                            <p>Products In Stock</p>
+                        </div>
+                    </div>
+                    <div class="overview-card warning">
+                        <div class="card-icon">⚠️</div>
+                        <div class="card-content">
+                            <h2 id="low-stock-products">0</h2>
+                            <p>Low Stock Alerts</p>
+                        </div>
+                    </div>
+                    <div class="overview-card danger">
+                        <div class="card-icon">🔴</div>
+                        <div class="card-content">
+                            <h2 id="out-of-stock-products">0</h2>
+                            <p>Out of Stock</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-bar">
+                    <button class="btn btn-primary btn-lg" onclick="openQuickStockAdjust()">
+                        ➕ Quick Stock Update
+                    </button>
+                    <button class="btn btn-success btn-lg" onclick="openBulkUpdate()">
+                        📋 Bulk Update
+                    </button>
+                    <button class="btn btn-secondary btn-lg" onclick="viewRestockList()">
+                        🔔 View Restock List
+                    </button>
+                    <button class="btn btn-info btn-lg" onclick="exportInventoryReport()">
+                        📥 Export Report
+                    </button>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="inventory-tabs">
+                    <button class="tab-btn active" data-tab="stock-levels">
+                        📊 Stock Levels
+                    </button>
+                    <button class="tab-btn" data-tab="history">
+                        📜 History
+                    </button>
+                    <button class="tab-btn" data-tab="alerts">
+                        🔔 Alerts & Reorder
+                    </button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="inventory-tab-content">
+
+                    <!-- Stock Levels Tab -->
+                    <div id="tab-stock-levels" class="tab-pane active">
+                        <div class="inventory-controls">
+                            <input type="text" id="inventory-search" class="form-control" placeholder="🔍 Search products...">
+                            <select id="inventory-filter" class="form-control">
+                                <option value="">All Products</option>
+                                <option value="in-stock">In Stock</option>
+                                <option value="low-stock">Low Stock</option>
+                                <option value="out-of-stock">Out of Stock</option>
+                            </select>
+                            <button class="btn btn-secondary" onclick="loadInventoryData()">🔄 Refresh</button>
+                        </div>
+
+                        <div class="inventory-table-container">
+                            <table class="inventory-table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Category</th>
+                                        <th>Current Stock</th>
+                                        <th>Status</th>
+                                        <th>Price</th>
+                                        <th>Stock Value</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inventory-table-body">
+                                    <!-- Populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- History Tab -->
+                    <div id="tab-history" class="tab-pane">
+                        <div class="history-controls">
+                            <select id="history-period" class="form-control">
+                                <option value="7">Last 7 Days</option>
+                                <option value="30" selected>Last 30 Days</option>
+                                <option value="90">Last 90 Days</option>
+                            </select>
+                            <select id="history-type" class="form-control">
+                                <option value="">All Changes</option>
+                                <option value="restock">Restock</option>
+                                <option value="sale">Sales</option>
+                                <option value="adjustment">Adjustments</option>
+                                <option value="return">Returns</option>
+                                <option value="damage">Damage/Loss</option>
+                            </select>
+                        </div>
+
+                        <div class="history-timeline" id="history-timeline">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Alerts Tab -->
+                    <div id="tab-alerts" class="tab-pane">
+                        <div class="alerts-header">
+                            <h3>🔔 Restock Alerts</h3>
+                            <p>Products that need to be restocked</p>
+                        </div>
+
+                        <div class="restock-list" id="restock-list">
+                            <!-- Populated by JavaScript -->
+                        </div>
+
+                        <div class="alert-config-section">
+                            <h3>⚙️ Configure Stock Alerts</h3>
+                            <p>Set up automatic alerts for low stock</p>
+                            <button class="btn btn-primary" onclick="openAlertConfiguration()">
+                                Configure Alerts
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Stock Adjustment Modal -->
+            <div id="quick-stock-modal" class="modal hidden">
+                <div class="modal-backdrop"></div>
+                <div class="modal-content modal-md">
+                    <div class="modal-header">
+                        <h3>➕ Quick Stock Update</h3>
+                        <button class="modal-close" onclick="closeQuickStockModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Select Product</label>
+                            <select id="quick-product-select" class="form-control">
+                                <option value="">Choose a product...</option>
+                            </select>
+                        </div>
+
+                        <div id="current-stock-display" class="stock-display hidden">
+                            <div class="stock-info">
+                                <span class="label">Current Stock:</span>
+                                <span class="value" id="current-stock-value">0</span>
+                            </div>
+                        </div>
+
+                        <div class="adjustment-type-selector">
+                            <label>Action</label>
+                            <div class="btn-group">
+                                <button class="btn btn-success active" data-action="add">
+                                    ➕ Add Stock
+                                </button>
+                                <button class="btn btn-danger" data-action="subtract">
+                                    ➖ Remove Stock
+                                </button>
+                                <button class="btn btn-primary" data-action="set">
+                                    📝 Set Exact Amount
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="quantity-label">Quantity to Add</label>
+                            <input type="number" id="quick-quantity" class="form-control" min="0" value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Reason (Optional)</label>
+                            <select id="quick-reason" class="form-control">
+                                <option value="restock">Restock from Supplier</option>
+                                <option value="adjustment">Stock Adjustment</option>
+                                <option value="return">Customer Return</option>
+                                <option value="damage">Damage/Loss</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Notes (Optional)</label>
+                            <textarea id="quick-notes" class="form-control" rows="2" placeholder="Add any notes..."></textarea>
+                        </div>
+
+                        <div class="new-stock-preview hidden">
+                            <div class="preview-box">
+                                <span class="label">New Stock Will Be:</span>
+                                <span class="value large" id="new-stock-value">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeQuickStockModal()">Cancel</button>
+                        <button class="btn btn-primary btn-lg" onclick="saveQuickStockUpdate()">
+                            ✅ Update Stock
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bulk Update Modal -->
+            <div id="bulk-update-modal" class="modal hidden">
+                <div class="modal-backdrop"></div>
+                <div class="modal-content modal-lg">
+                    <div class="modal-header">
+                        <h3>📋 Bulk Stock Update</h3>
+                        <button class="modal-close" onclick="closeBulkUpdateModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="bulk-instructions">
+                            <h4>💡 How to use:</h4>
+                            <ol>
+                                <li>Select products from the list below</li>
+                                <li>Enter new stock quantity for each</li>
+                                <li>Add a reason for the update</li>
+                                <li>Click "Update All" to save</li>
+                            </ol>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Update Reason</label>
+                            <select id="bulk-reason" class="form-control">
+                                <option value="restock">Bulk Restock</option>
+                                <option value="adjustment">Inventory Audit</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="bulk-products-list" id="bulk-products-list">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeBulkUpdateModal()">Cancel</button>
+                        <button class="btn btn-primary btn-lg" onclick="saveBulkUpdate()">
+                            ✅ Update All Selected
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Configuration Modal -->
+            <div id="alert-config-modal" class="modal hidden">
+                <div class="modal-backdrop"></div>
+                <div class="modal-content modal-md">
+                    <div class="modal-header">
+                        <h3>⚙️ Configure Stock Alert</h3>
+                        <button class="modal-close" onclick="closeAlertConfigModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Select Product</label>
+                            <select id="alert-product-select" class="form-control">
+                                <option value="">Choose a product...</option>
+                            </select>
+                        </div>
+
+                        <div class="alert-config-visual">
+                            <div class="config-item">
+                                <label>🔔 Alert When Stock Falls Below</label>
+                                <input type="number" id="reorder-point" class="form-control" value="10" min="0">
+                                <small>We'll notify you when stock reaches this level</small>
+                            </div>
+
+                            <div class="config-item">
+                                <label>📦 Suggested Reorder Quantity</label>
+                                <input type="number" id="reorder-quantity" class="form-control" value="50" min="1">
+                                <small>How many units to reorder</small>
+                            </div>
+
+                            <div class="config-item">
+                                <label>Enable Alert</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="alert-enabled" checked>
+                                    <label for="alert-enabled">Alert Enabled</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" onclick="closeAlertConfigModal()">Cancel</button>
+                        <button class="btn btn-primary btn-lg" onclick="saveAlertConfig()">
+                            ✅ Save Alert Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <section id="section-reviews" class="content-section">
+                <div class="section-header">
+                    <h1>Reviews Management</h1>
+                    <p>Manage customer reviews and ratings</p>
+                </div>
+
+                <!-- Statistics Overview -->
+                <div id="reviews-stats" class="stats-overview">
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-reviews">0</div>
+                        <div class="stat-label">Total Reviews</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="pending-reviews">0</div>
+                        <div class="stat-label">Pending Approval</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="approved-reviews">0</div>
+                        <div class="stat-label">Approved</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="average-rating">0.0</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="section-actions" style="margin-bottom: 2rem;">
+                    <button class="btn btn-primary" onclick="showGenerateLinkModal()">
+                        ✉️ Generate Review Link
+                    </button>
+                    <button class="btn btn-secondary" onclick="loadAllReviews()">
+                        🔄 Refresh
+                    </button>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs" style="margin-bottom: 2rem;">
+                    <button class="tab-btn active" data-tab="pending" onclick="switchReviewTab('pending')">
+                        Pending Approval (<span id="pending-count">0</span>)
+                    </button>
+                    <button class="tab-btn" data-tab="approved" onclick="switchReviewTab('approved')">
+                        Approved (<span id="approved-count">0</span>)
+                    </button>
+                    <button class="tab-btn" data-tab="all" onclick="switchReviewTab('all')">
+                        All Reviews (<span id="all-count">0</span>)
+                    </button>
+                </div>
+
+                <!-- Reviews List -->
+                <div id="reviews-container"></div>
+
+            </section>
+
+            <!-- Generate Review Link Modal -->
+            <div id="generate-link-modal" class="modal" style="display: none;">
+                <div class="modal-content" style="max-width: 750px; width: 90%;">
+                    <div class="modal-header">
+                        <h3>Generate Review Link</h3>
+                        <button class="close-modal" onclick="closeGenerateLinkModal()">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="generate-link-description">
+                            <p>Create a personalized review link for your customer. Fill in their details below to generate a unique verification link.</p>
+                        </div>
+
+                        <form id="generate-link-form" class="enhanced-form">
+                            <div class="enhanced-form-group">
+                                <label class="enhanced-label">
+                                    <span class="label-icon">👤</span>
+                                    <span class="label-text">Customer Name</span>
+                                    <span class="required-mark">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="gen-customer-name"
+                                    class="enhanced-input"
+                                    placeholder="Enter customer's full name"
+                                    required
+                                    autocomplete="off">
+                                <small class="input-hint">Enter the customer's complete name</small>
+                            </div>
+
+                            <div class="enhanced-form-group">
+                                <label class="enhanced-label">
+                                    <span class="label-icon">📱</span>
+                                    <span class="label-text">Phone Number</span>
+                                    <span class="required-mark">*</span>
+                                </label>
+                                <input
+                                    type="tel"
+                                    id="gen-customer-phone"
+                                    class="enhanced-input"
+                                    placeholder="Enter 10-digit phone number"
+                                    required
+                                    autocomplete="off"
+                                    pattern="[0-9]{10}">
+                                <small class="input-hint">Used for verification and WhatsApp delivery</small>
+                            </div>
+
+                            <div class="enhanced-form-group">
+                                <label class="enhanced-label">
+                                    <span class="label-icon">📦</span>
+                                    <span class="label-text">Order Reference</span>
+                                    <span class="optional-mark">(Optional)</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="gen-order-ref"
+                                    class="enhanced-input"
+                                    placeholder="Order ID or product details"
+                                    autocomplete="off">
+                                <small class="input-hint">Helps customer remember their purchase</small>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block btn-lg enhanced-submit">
+                                <span class="btn-icon">✨</span>
+                                Generate Review Link
+                            </button>
+                        </form>
+
+                        <div id="generated-link-display" class="generated-link-container" style="display: none; margin-top: 2rem;">
+                            <div class="link-success-box">
+                                <h4 class="success-title">✓ Link Generated Successfully!</h4>
+                                <div class="link-field-group">
+                                    <label class="link-label">Review Link:</label>
+                                    <div class="link-input-wrapper">
+                                        <input type="text" id="generated-link" readonly class="generated-link-input">
+                                        <button class="btn btn-secondary" onclick="copyReviewLink()">📋 Copy</button>
+                                    </div>
+                                </div>
+                                <div class="whatsapp-template-box">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                        <strong>WhatsApp Message Template:</strong>
+                                        <button class="btn btn-secondary btn-sm" onclick="copyWhatsAppMessage()">📋 Copy Message</button>
+                                    </div>
+                                    <pre id="whatsapp-template" class="whatsapp-template-text"></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <section id="section-settings" class="content-section">
+                <div class="section-header">
+                    <h1>Settings</h1>
+                </div>
+                <div class="settings-container">
+                    <div class="settings-card">
+                        <h3>Supabase Connection</h3>
+                        <p>Status: <span id="connection-status" class="status-badge">Checking...</span></p>
+                        <button class="btn btn-primary" onclick="testSupabaseConnection()">Test Connection</button>
+                    </div>
+                    <div class="settings-card">
+                        <h3>Appearance</h3>
+                        <p>Theme: <span id="current-theme">Light</span></p>
+                        <button class="btn btn-secondary" onclick="toggleTheme()">Toggle Theme</button>
+                    </div>
+                    <div class="settings-card site-stats-card">
+                        <h3>📊 Site Statistics</h3>
+                        <p class="setting-description">Edit the statistics displayed on your website (About page and Footer)</p>
+
+                        <div id="site-stats-loading" class="loading-message">
+                            <div class="spinner-small"></div>
+                            <span>Loading statistics...</span>
+                        </div>
+
+                        <form id="site-stats-form" class="site-stats-form" style="display: none;">
+                            <div class="stat-input-group">
+                                <label for="stat-customers">
+                                    <span class="stat-icon">👥</span>
+                                    <span class="stat-label">Happy Customers</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="stat-customers"
+                                    name="stat_happy_customers"
+                                    class="stat-input"
+                                    placeholder="e.g., 500+"
+                                    required
+                                />
+                                <span class="input-hint">Tip: Use format like "500+" or "1,000+"</span>
+                            </div>
+
+                            <div class="stat-input-group">
+                                <label for="stat-orders">
+                                    <span class="stat-icon">📦</span>
+                                    <span class="stat-label">Orders Completed</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="stat-orders"
+                                    name="stat_orders_completed"
+                                    class="stat-input"
+                                    placeholder="e.g., 1000+"
+                                    required
+                                />
+                                <span class="input-hint">Tip: Use format like "1000+" or "2,500+"</span>
+                            </div>
+
+                            <div class="stat-input-group">
+                                <label for="stat-rating">
+                                    <span class="stat-icon">⭐</span>
+                                    <span class="stat-label">Average Rating</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="stat-rating"
+                                    name="stat_average_rating"
+                                    class="stat-input"
+                                    placeholder="e.g., 5⭐ or 4.8★"
+                                    required
+                                />
+                                <span class="input-hint">Tip: Use stars (⭐★) or numbers with stars</span>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    💾 Save Statistics
+                                </button>
+                                <button type="button" class="btn btn-secondary" onclick="loadSiteStats()">
+                                    🔄 Reset
+                                </button>
+                            </div>
+                        </form>
+
+                        <div id="site-stats-error" class="error-message" style="display: none;"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="supabase-service.js"></script>
+    <script src="admin-script.js"></script>
+    <script src="admin-analytics.js"></script>
+    <script src="admin-inventory.js"></script>
+</body>
+</html>
