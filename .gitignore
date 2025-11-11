@@ -3,9 +3,6 @@
 .env
 *.env
 
-# Config files with credentials
-config.js
-
 # Dependencies
 node_modules/
 package-lock.json
