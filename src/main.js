@@ -1,5 +1,5 @@
-import './style.css'; // Import global styles
-import './wishlist-styles.css'; // Import wishlist styles
+import '../style.css'; // Import global styles
+import '../wishlist-styles.css'; // Import wishlist styles
 
 import { SUPABASE_CONFIG, ADMIN_CONFIG } from './config.js';
 import { SupabaseService } from './supabase-service.js';
