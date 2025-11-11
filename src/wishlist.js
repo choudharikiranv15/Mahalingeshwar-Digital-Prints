@@ -2,7 +2,10 @@
 // Wishlist Module
 // =====================================================
 
-const WishlistManager = {
+import { SupabaseService } from './supabase-service.js';
+import { addToCart } from './app.js'; // Import addToCart from app.js
+
+export const WishlistManager = {
     wishlistItems: [],
 
     // Initialize wishlist
@@ -184,11 +187,9 @@ const WishlistManager = {
             // Get product details
             const product = await SupabaseService.getProductById(productId);
             if (product) {
-                // Add to cart (assuming CartManager exists in app.js)
-                if (window.CartManager) {
-                    window.CartManager.addItem(product);
-                    this.showToast('Added to cart!', 'success');
-                }
+                // Add to cart
+                addToCart(product.id, 1); // Use the imported addToCart function
+                this.showToast('Added to cart!', 'success');
             }
         } catch (error) {
             console.error('Error adding to cart:', error);
@@ -208,10 +209,8 @@ const WishlistManager = {
 
             let addedCount = 0;
             for (const product of products) {
-                if (window.CartManager) {
-                    window.CartManager.addItem(product);
-                    addedCount++;
-                }
+                addToCart(product.id, 1);
+                addedCount++;
             }
 
             this.showToast(`Added ${addedCount} items to cart!`, 'success');
@@ -289,13 +288,3 @@ const WishlistManager = {
         }
     }
 };
-
-// Initialize wishlist when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => WishlistManager.init());
-} else {
-    WishlistManager.init();
-}
-
-// Make WishlistManager globally available
-window.WishlistManager = WishlistManager;

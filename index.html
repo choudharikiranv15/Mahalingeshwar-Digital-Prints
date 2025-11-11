@@ -8,15 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="wishlist-styles.css">
 
-    <script>
-      // Inject Netlify environment variables into the client-side JavaScript
-      window.env = {
-        VITE_SUPABASE_URL: "%VITE_SUPABASE_URL%",
-        VITE_SUPABASE_ANON_KEY: "%VITE_SUPABASE_ANON_KEY%",
-        VITE_ADMIN_EMAIL: "%VITE_ADMIN_EMAIL%",
-        VITE_ADMIN_PASSWORD: "%VITE_ADMIN_PASSWORD%"
-      };
-    </script>
     <!-- Supabase Client Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -534,7 +525,7 @@
     <script src="wishlist.js"></script>
     <!-- Wishlist UI Enhancer -->
     <script src="wishlist-ui-enhancer.js"></script>
-    <!-- Main Application -->
-    <script src="app.js"></script>
+    <!-- Main Application Entry Point (Vite will bundle all JS from here) -->
+    <script type="module" src="/src/main.js"></script>
 </body>
 </html>

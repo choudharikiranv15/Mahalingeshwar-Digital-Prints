@@ -1,8 +1,9 @@
 // Mahalingeshwar Digital Prints & Gifts - Complete Ecommerce Application
 // ALL FUNCTIONALITY WORKING PERFECTLY
 
-// Application Data
-const APP_DATA = {
+import { SupabaseService } from './supabase-service.js';
+
+export const APP_DATA = {
   "company": {
     "name": "Mahalingeshwar Digital Prints & Gifts",
     "proprietor": "S.B.Choudhhari",
@@ -581,8 +582,7 @@ function addToCart(productId, quantity = 1, options = {}) {
   console.log('🛒 Adding to cart:', productId);
 
   // Try cache first, fallback to APP_DATA for compatibility
-  const product = AppState.productsCache.find(p => p.id === productId) ||
-                  APP_DATA.products.find(p => p.id === productId);
+  const product = AppState.productsCache.find(p => p.id === productId);
   if (!product) {
     showNotification('Product not found!', 'error');
     return;
@@ -1759,12 +1759,7 @@ window.addEventListener('error', (e) => {
 });
 
 // Make functions globally available for onclick handlers
-window.navigateTo = navigateTo;
-window.addToCart = addToCart;
-window.removeFromCart = removeFromCart;
-window.updateCartQuantity = updateCartQuantity;
-window.showCustomerModal = showCustomerModal;
-window.closeCustomerModal = closeCustomerModal;
+export { navigateTo, addToCart, removeFromCart, updateCartQuantity, showCustomerModal, closeCustomerModal };
 
 console.log('✅ Mahalingeshwar Digital Prints App Ready!');
 console.log('🚀 All features working:');

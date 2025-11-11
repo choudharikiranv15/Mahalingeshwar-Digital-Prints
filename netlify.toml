@@ -2,12 +2,8 @@
 # For Mahalingeshwar Digital Prints & Gifts
 
 [build]
-  # No build command needed for vanilla JS project
-  publish = "."
-
-  # If you add a build process later, uncomment:
-  # command = "npm run build"
-  # publish = "dist"
+  command = "npm run build"
+  publish = "dist"
 
 [build.environment]
   # Node version (if needed for build tools later)
@@ -35,11 +31,11 @@
     # Content Security Policy (adjust as needed)
     Content-Security-Policy = '''
       default-src 'self';
-      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://jzhfrgexbzzwxstfbvtg.supabase.co;
-      style-src 'self' 'unsafe-inline';
-      img-src 'self' data: https:;
-      font-src 'self' data:;
-      connect-src 'self' https://jzhfrgexbzzwxstfbvtg.supabase.co https://*.supabase.co https://wa.me;
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://*.supabase.co;
+      style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
+      img-src 'self' data: blob: https:;
+      font-src 'self' data: https:;
+      connect-src 'self' https://*.supabase.co wss://*.supabase.co https://wa.me;
       frame-src 'self';
     '''
 

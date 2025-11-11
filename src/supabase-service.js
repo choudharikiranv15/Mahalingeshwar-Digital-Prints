@@ -3,10 +3,12 @@
 // =====================================================
 // This file handles all Supabase database operations
 
-// Initialize Supabase Client
-const { createClient } = supabase;
+import { SUPABASE_CONFIG } from './config.js';
 
-const supabaseClient = createClient(
+// Initialize Supabase Client
+const { createClient } = window.supabase; // Access global Supabase object
+
+export const supabaseClient = createClient(
   SUPABASE_CONFIG.url,
   SUPABASE_CONFIG.anonKey
 );
@@ -17,7 +19,7 @@ console.log('✅ Supabase client initialized');
 // PRODUCTS SERVICES
 // =====================================================
 
-const SupabaseService = {
+export const SupabaseService = {
   // Fetch all products
   async getAllProducts() {
     try {
@@ -1386,6 +1388,3 @@ const SupabaseService = {
     }
   }
 };
-
-// Test connection on load
-SupabaseService.testConnection();

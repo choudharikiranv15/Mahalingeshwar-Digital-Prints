@@ -1,6 +1,8 @@
 // =====================================================
 // Admin Dashboard Script
 // =====================================================
+import { ADMIN_CONFIG } from './config.js';
+import { SupabaseService, supabaseClient } from './supabase-service.js';
 
 // Note: supabaseClient is already initialized in supabase-service.js
 // We can use it directly here
@@ -1500,3 +1502,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log('✅ Admin script loaded successfully');
+
+// Expose functions used by inline onclick handlers
+window.editProduct = editProduct;
+window.deleteProduct = deleteProduct;
+window.viewOrderDetail = viewOrderDetail;
+window.updateOrderStatus = updateOrderStatus;
+window.copyWhatsAppMessage = copyWhatsAppMessage;
+window.showAddOfferModal = showAddOfferModal;
+window.editOffer = editOffer;
+window.saveOffer = saveOffer;
+window.deleteOffer = deleteOffer;
+window.closeOfferModal = closeOfferModal;
+window.approveReview = approveReview;
+window.toggleFeatured = toggleFeatured;
+window.deleteReviewConfirm = deleteReviewConfirm;

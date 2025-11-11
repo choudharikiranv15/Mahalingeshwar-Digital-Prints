@@ -2,7 +2,10 @@
 // Inventory Management System - Admin Friendly
 // =====================================================
 
-const InventoryManager = {
+import { SupabaseService } from './supabase-service.js';
+import { showLoading, showToast, openQuickStockAdjust, closeQuickStockModal, openBulkUpdate, closeBulkUpdateModal, viewRestockList, exportInventoryReport, openAlertConfiguration, closeAlertConfigModal, saveAlertConfig } from './admin-script.js'; // Assuming these functions are exported from admin-script.js
+
+export const InventoryManager = {
     products: [],
     currentProduct: null,
     bulkSelections: [],
@@ -80,10 +83,7 @@ const InventoryManager = {
             this.updateOverviewCards(summary);
 
             // Get all products
-            const { data, error } = await supabaseClient
-                .from('products')
-                .select('*')
-                .order('name');
+            const { data, error } = await SupabaseService.getAllProducts(); // Using SupabaseService.getAllProducts()
 
             if (error) throw error;
 
@@ -140,10 +140,10 @@ const InventoryManager = {
                     <td>₹${parseFloat(product.price).toFixed(2)}</td>
                     <td>₹${stockValue.toFixed(2)}</td>
                     <td>
-                        <button class="btn btn-sm btn-primary" onclick="InventoryManager.quickAdjust('${product.product_id}')">
+                        <button class="btn btn-sm btn-primary" onclick="openQuickStockAdjust()">
                             ✏️ Adjust
                         </button>
-                        <button class="btn btn-sm btn-secondary" onclick="InventoryManager.viewHistory('${product.product_id}')">
+                        <button class="btn btn-sm btn-secondary" onclick="viewHistory('${product.product_id}')">
                             📜 History
                         </button>
                     </td>
@@ -578,82 +578,10 @@ const InventoryManager = {
 };
 
 // Modal functions
-function openQuickStockAdjust() {
-    document.getElementById('quick-stock-modal').classList.remove('hidden');
-}
-
-function closeQuickStockModal() {
-    const modal = document.getElementById('quick-stock-modal');
-    const productSelect = document.getElementById('quick-product-select');
-    const quantityInput = document.getElementById('quick-quantity');
-    const notesInput = document.getElementById('quick-notes');
-    const currentStockDisplay = document.getElementById('current-stock-display');
-    const newStockPreview = document.querySelector('.new-stock-preview');
-
-    if (modal) modal.classList.add('hidden');
-    if (productSelect) productSelect.value = '';
-    if (quantityInput) quantityInput.value = 0;
-    if (notesInput) notesInput.value = '';
-    if (currentStockDisplay) currentStockDisplay.classList.add('hidden');
-    if (newStockPreview) newStockPreview.classList.add('hidden');
-}
-
-function saveQuickStockUpdate() {
-    InventoryManager.saveQuickStockUpdate();
-}
-
-function openBulkUpdate() {
-    showToast('Bulk update feature coming soon!', 'info');
-}
-
-function closeBulkUpdateModal() {
-    document.getElementById('bulk-update-modal')?.classList.add('hidden');
-}
-
-function viewRestockList() {
-    InventoryManager.switchTab('alerts');
-}
-
-function exportInventoryReport() {
-    InventoryManager.exportInventoryReport();
-}
-
-function openAlertConfiguration() {
-    document.getElementById('alert-config-modal')?.classList.remove('hidden');
-}
-
-function closeAlertConfigModal() {
-    document.getElementById('alert-config-modal')?.classList.add('hidden');
-}
-
-async function saveAlertConfig() {
-    const productId = document.getElementById('alert-product-select')?.value;
-    const reorderPoint = parseInt(document.getElementById('reorder-point')?.value || 10);
-    const reorderQuantity = parseInt(document.getElementById('reorder-quantity')?.value || 50);
-    const alertEnabled = document.getElementById('alert-enabled')?.checked || false;
-
-    if (!productId) {
-        showToast('Please select a product', 'error');
-        return;
-    }
-
-    try {
-        showLoading(true);
-
-        await SupabaseService.setStockAlert(productId, reorderPoint, reorderQuantity, alertEnabled);
-
-        showToast('✅ Alert settings saved!', 'success');
-        closeAlertConfigModal();
-
-    } catch (error) {
-        console.error('Error saving alert config:', error);
-        showToast('Failed to save settings', 'error');
-    } finally {
-        showLoading(false);
-    }
-}
+// Functions moved to admin-script.js to be properly imported and managed
 
 // Initialize when inventory section is visible
+/*
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         const inventorySection = document.getElementById('section-inventory');
@@ -669,3 +597,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 1000);
 });
+*/

@@ -2,7 +2,10 @@
 // Admin Analytics Module
 // =====================================================
 
-const AnalyticsManager = {
+import { SupabaseService } from './supabase-service.js';
+import { showLoading, showToast } from './admin-script.js';
+
+export const AnalyticsManager = {
     currentPeriod: 30,
     analyticsData: null,
     charts: {},
@@ -486,6 +489,7 @@ END OF REPORT
 };
 
 // Initialize analytics when section is visible
+/*
 document.addEventListener('DOMContentLoaded', () => {
     // Wait for admin login
     setTimeout(() => {
@@ -503,3 +507,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, 1000);
 });
+*/
