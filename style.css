@@ -2732,3 +2732,527 @@ body {
     width: 100% !important;
   }
 }
+
+/* =====================================================
+   ENHANCED MOBILE RESPONSIVENESS
+   ===================================================== */
+
+/* Tablet and Small Desktop (max-width: 900px) */
+@media (max-width: 900px) {
+  .nav-logo .logo-text {
+    display: none;
+  }
+
+  .search-input {
+    width: 120px;
+  }
+
+  .nav-actions {
+    gap: var(--space-8);
+  }
+}
+
+/* Enhanced Mobile Styles (max-width: 768px) - Additional improvements */
+@media (max-width: 768px) {
+  /* Hide logo text on mobile */
+  .nav-logo .logo-text {
+    display: none;
+  }
+
+  /* Ensure mobile toggle is visible and properly styled */
+  .nav-toggle {
+    display: flex !important;
+    z-index: 100;
+    padding: var(--space-4);
+  }
+
+  /* Touch-friendly buttons - minimum 44x44px for accessibility */
+  .btn {
+    min-height: 44px;
+    padding: var(--space-12) var(--space-20);
+  }
+
+  /* Better modal sizing on mobile */
+  .modal-content {
+    width: 95%;
+    max-width: 100%;
+    margin: var(--space-12);
+  }
+
+  .modal-body {
+    padding: var(--space-16);
+  }
+
+  .modal-header,
+  .modal-footer {
+    padding: var(--space-16);
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  /* Form improvements for better touch interaction */
+  .form-control {
+    min-height: 44px;
+    font-size: var(--font-size-md);
+    padding: var(--space-12);
+  }
+
+  textarea.form-control {
+    min-height: 100px;
+  }
+
+  /* Hero section mobile optimization */
+  .hero {
+    min-height: 60vh;
+    padding: var(--space-32) 0;
+  }
+
+  .hero-title {
+    font-size: clamp(1.75rem, 8vw, 3rem);
+    margin-bottom: var(--space-16);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-24);
+    line-height: 1.6;
+  }
+
+  /* Product grid optimization */
+  .categories-grid,
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--space-12);
+  }
+
+  /* Category and Product cards */
+  .category-card,
+  .product-card {
+    padding: var(--space-12);
+  }
+
+  .category-icon {
+    font-size: 2rem;
+  }
+
+  /* Wishlist and Cart indicators */
+  .wishlist-indicator,
+  .cart-indicator {
+    padding: var(--space-6) var(--space-8);
+  }
+
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Footer adjustments */
+  .footer-wave {
+    height: 60px;
+  }
+
+  .footer-content {
+    padding: var(--space-24) 0;
+  }
+
+  /* Offers section */
+  .offers-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-16);
+  }
+
+  .offer-card {
+    padding: var(--space-20);
+  }
+
+  /* Services grid */
+  .services-grid {
+    gap: var(--space-16);
+  }
+
+  /* Better spacing for page content */
+  .app-content {
+    padding-top: 80px;
+  }
+}
+
+/* Small Mobile Devices (max-width: 480px) - Additional improvements */
+@media (max-width: 480px) {
+  /* Even more compact navbar */
+  .logo-icon {
+    width: 35px;
+    height: 35px;
+    font-size: var(--font-size-base);
+  }
+
+  .nav-actions {
+    gap: var(--space-4);
+  }
+
+  .nav-container {
+    padding: var(--space-10) var(--space-12);
+  }
+
+  .wishlist-indicator,
+  .cart-indicator {
+    padding: var(--space-4) var(--space-6);
+  }
+
+  .cart-icon,
+  .wishlist-icon {
+    font-size: var(--font-size-base);
+  }
+
+  .cart-count,
+  .wishlist-count {
+    font-size: 10px;
+    padding: var(--space-1) var(--space-4);
+    min-width: 18px;
+  }
+
+  .theme-toggle {
+    width: 35px;
+    height: 35px;
+    border-width: 1px;
+  }
+
+  .theme-icon {
+    font-size: var(--font-size-base);
+  }
+
+  /* Hero section for very small screens */
+  .hero {
+    min-height: 50vh;
+    padding: var(--space-24) 0;
+  }
+
+  .hero-title {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+    line-height: 1.3;
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-12);
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+  /* Single column grids for very small screens */
+  .categories-grid,
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+  }
+
+  /* Compact product cards */
+  .product-card {
+    padding: var(--space-12);
+  }
+
+  .product-image {
+    height: 180px;
+  }
+
+  .product-title {
+    font-size: var(--font-size-base);
+  }
+
+  .product-price {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Form elements */
+  .form-group {
+    margin-bottom: var(--space-12);
+  }
+
+  .form-label {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-4);
+  }
+
+  .form-control {
+    font-size: var(--font-size-base);
+    padding: var(--space-10) var(--space-12);
+  }
+
+  .form-section {
+    padding: var(--space-16) 0;
+  }
+
+  .form-section h4 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-12);
+  }
+
+  /* Modal adjustments */
+  .modal-content {
+    width: 100%;
+    margin: var(--space-8);
+    max-height: 95vh;
+  }
+
+  .modal-header h3 {
+    font-size: var(--font-size-lg);
+  }
+
+  .modal-close {
+    width: 28px;
+    height: 28px;
+    font-size: var(--font-size-xl);
+  }
+
+  /* Page titles */
+  .page-title,
+  .section-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-16);
+  }
+
+  /* Filters */
+  .filters-container {
+    gap: var(--space-8);
+  }
+
+  .filters-container select {
+    font-size: var(--font-size-sm);
+    padding: var(--space-8) var(--space-12);
+  }
+
+  /* Cart items */
+  .cart-item {
+    padding: var(--space-12);
+  }
+
+  .cart-item-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .cart-item-title {
+    font-size: var(--font-size-sm);
+  }
+
+  .cart-summary {
+    padding: var(--space-16);
+  }
+
+  .cart-summary-total {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Contact page */
+  .contact-item {
+    padding: var(--space-12);
+  }
+
+  .contact-icon {
+    font-size: var(--font-size-2xl);
+  }
+
+  .contact-details h4 {
+    font-size: var(--font-size-base);
+  }
+
+  .contact-details p {
+    font-size: var(--font-size-sm);
+  }
+
+  /* About page stats */
+  .stat-number {
+    font-size: var(--font-size-2xl);
+  }
+
+  .stat-label {
+    font-size: var(--font-size-xs);
+  }
+
+  /* Footer */
+  .footer-logo {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-8);
+  }
+
+  .footer-section h4 {
+    font-size: var(--font-size-base);
+  }
+
+  .footer-links {
+    font-size: var(--font-size-sm);
+  }
+
+  .footer-links li {
+    margin-bottom: var(--space-8);
+  }
+
+  .social-links {
+    gap: var(--space-12);
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Floating WhatsApp button */
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    bottom: var(--space-12);
+    right: var(--space-12);
+  }
+
+  .whatsapp-icon {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Better button sizing */
+  .btn--sm {
+    font-size: var(--font-size-sm);
+    padding: var(--space-8) var(--space-12);
+    min-height: 40px;
+  }
+
+  .btn--lg {
+    font-size: var(--font-size-base);
+    padding: var(--space-12) var(--space-16);
+  }
+}
+
+/* Extra Small Devices (max-width: 360px) */
+@media (max-width: 360px) {
+  .nav-container {
+    padding: var(--space-8) var(--space-10);
+  }
+
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+    font-size: var(--font-size-sm);
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-xs);
+  }
+
+  .btn {
+    font-size: var(--font-size-sm);
+    padding: var(--space-10) var(--space-16);
+  }
+
+  .product-image {
+    height: 150px;
+  }
+
+  .section-title,
+  .page-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .container {
+    padding: 0 var(--space-10);
+  }
+}
+
+/* Landscape orientation fixes for mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero {
+    min-height: 100vh;
+    padding: var(--space-20) 0;
+  }
+
+  .nav-menu {
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .modal-content {
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+}
+
+/* Touch device optimizations - Better UX for touch screens */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch targets for better accessibility */
+  .nav-link {
+    padding: var(--space-12) var(--space-16);
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn {
+    min-height: 48px;
+  }
+
+  .form-control,
+  select {
+    min-height: 48px;
+  }
+
+  /* Remove hover effects on touch devices (they cause sticky states) */
+  .product-card:hover,
+  .category-card:hover,
+  .offer-card:hover,
+  .service-card:hover {
+    transform: none;
+  }
+
+  /* Add active states instead for touch feedback */
+  .product-card:active,
+  .category-card:active,
+  .offer-card:active,
+  .service-card:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Better touch targets for navigation */
+  .cart-indicator,
+  .wishlist-indicator {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .nav-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

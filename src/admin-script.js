@@ -1462,7 +1462,7 @@ function copyReviewLink() {
 }
 
 // Copy WhatsApp message
-function copyWhatsAppMessage() {
+function copyWhatsAppTemplate() {
     const templateText = document.getElementById('whatsapp-template').textContent;
 
     // Create temporary textarea to copy text
@@ -1509,6 +1509,7 @@ window.deleteProduct = deleteProduct;
 window.viewOrderDetail = viewOrderDetail;
 window.updateOrderStatus = updateOrderStatus;
 window.copyWhatsAppMessage = copyWhatsAppMessage;
+window.copyWhatsAppTemplate = copyWhatsAppTemplate;
 window.showAddOfferModal = showAddOfferModal;
 window.editOffer = editOffer;
 window.saveOffer = saveOffer;
@@ -1517,3 +1518,20 @@ window.closeOfferModal = closeOfferModal;
 window.approveReview = approveReview;
 window.toggleFeatured = toggleFeatured;
 window.deleteReviewConfirm = deleteReviewConfirm;
+
+// Export functions for use by other admin modules
+export {
+    showToast,
+    showLoading
+};
+
+// Placeholder exports for inventory module functions (if they exist elsewhere or need to be implemented)
+export const openQuickStockAdjust = window.openQuickStockAdjust || (() => console.warn('openQuickStockAdjust not implemented'));
+export const closeQuickStockModal = window.closeQuickStockModal || (() => console.warn('closeQuickStockModal not implemented'));
+export const openBulkUpdate = window.openBulkUpdate || (() => console.warn('openBulkUpdate not implemented'));
+export const closeBulkUpdateModal = window.closeBulkUpdateModal || (() => console.warn('closeBulkUpdateModal not implemented'));
+export const viewRestockList = window.viewRestockList || (() => console.warn('viewRestockList not implemented'));
+export const exportInventoryReport = window.exportInventoryReport || (() => console.warn('exportInventoryReport not implemented'));
+export const openAlertConfiguration = window.openAlertConfiguration || (() => console.warn('openAlertConfiguration not implemented'));
+export const closeAlertConfigModal = window.closeAlertConfigModal || (() => console.warn('closeAlertConfigModal not implemented'));
+export const saveAlertConfig = window.saveAlertConfig || (() => console.warn('saveAlertConfig not implemented'));
