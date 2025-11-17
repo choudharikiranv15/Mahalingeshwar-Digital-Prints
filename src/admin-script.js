@@ -311,7 +311,6 @@ async function handleProductSubmit(e) {
             description: formData.description,
             icon: formData.icon || '📦',
             image_url: imageUrls.length > 0 ? imageUrls[0] : null, // Keep backward compatibility
-            images: imageUrls.length > 0 ? imageUrls : null, // New field for multiple images
             featured: formData.featured,
             in_stock: formData.in_stock,
             stock_quantity: parseInt(formData.stock_quantity),
@@ -319,6 +318,11 @@ async function handleProductSubmit(e) {
             colors: formData.colors,
             sizes: formData.sizes
         };
+
+        // Only add images field if we have images (optional for now)
+        if (imageUrls.length > 0) {
+            productData.images = imageUrls;
+        }
 
         // Check if editing
         const editingId = document.getElementById('edit-product-uuid').value;

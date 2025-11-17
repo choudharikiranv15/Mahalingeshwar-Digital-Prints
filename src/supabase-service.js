@@ -122,6 +122,7 @@ export const SupabaseService = {
       description: dbProduct.description || '',
       icon: dbProduct.icon || '📦',
       imageUrl: dbProduct.image_url,
+      images: dbProduct.images || null, // Multiple images support
       featured: dbProduct.featured || false,
       inStock: dbProduct.in_stock || true,
       stockQuantity: dbProduct.stock_quantity || 0,
