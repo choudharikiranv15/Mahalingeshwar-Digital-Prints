@@ -1123,6 +1123,49 @@ window.navigateCarousel = function(event, direction) {
   img.src = images[newIndex];
   dots.forEach((dot, i) => {
     dot.classList.toggle('active', i === newIndex);
+    // Update inline styles for detail page dots
+    if (dot.hasAttribute('style')) {
+      if (i === newIndex) {
+        dot.style.background = 'rgba(255,255,255,1)';
+        dot.style.width = '32px';
+        dot.style.borderRadius = '6px';
+      } else {
+        dot.style.background = 'rgba(255,255,255,0.6)';
+        dot.style.width = '12px';
+        dot.style.borderRadius = '50%';
+      }
+    }
+  });
+};
+
+// Direct navigation to specific image by clicking dot
+window.navigateCarouselDirect = function(event, index) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const carousel = event.target.closest('.product-image-carousel');
+  if (!carousel) return;
+
+  const images = JSON.parse(carousel.dataset.images);
+  const img = carousel.querySelector('.carousel-image');
+  const dots = carousel.querySelectorAll('.carousel-dot');
+
+  // Update image and dots
+  img.src = images[index];
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+    // Update inline styles for detail page dots
+    if (dot.hasAttribute('style')) {
+      if (i === index) {
+        dot.style.background = 'rgba(255,255,255,1)';
+        dot.style.width = '32px';
+        dot.style.borderRadius = '6px';
+      } else {
+        dot.style.background = 'rgba(255,255,255,0.6)';
+        dot.style.width = '12px';
+        dot.style.borderRadius = '50%';
+      }
+    }
   });
 };
 
@@ -1256,20 +1299,35 @@ async function loadProductDetailPage(productId) {
   
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
   
+  // Handle multiple images with carousel
+  const images = product.images || (product.imageUrl ? [product.imageUrl] : []);
+  const hasImages = images.length > 0;
+
   container.innerHTML = `
-    <button class="back-btn" onclick="history.back()" style="margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0.5rem; color: var(--color-text); cursor: pointer; transition: var(--transition);">
+    <button class="back-btn" onclick="navigateTo('products')" style="margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0.5rem; color: var(--color-text); cursor: pointer; transition: var(--transition);">
       <span>←</span> Back to Products
     </button>
 
     <div class="product-detail-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; background: var(--color-surface); padding: 3rem; border-radius: 1rem; box-shadow: var(--shadow-md);">
       <div class="product-images">
         <div class="product-main-image" style="position: relative; background: var(--color-bg); border-radius: 1rem; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 500px;">
-          ${product.imageUrl
-            ? `<img src="${product.imageUrl}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">`
+          ${hasImages
+            ? `
+              <div class="product-image-carousel" data-images='${JSON.stringify(images)}' style="width: 100%; height: 100%; position: relative;">
+                <img src="${images[0]}" alt="${product.name}" class="carousel-image" style="width: 100%; height: 100%; object-fit: cover;">
+                ${images.length > 1 ? `
+                  <button class="carousel-btn carousel-prev" onclick="navigateCarousel(event, -1)" style="position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); background: rgba(255, 255, 255, 0.9); border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">‹</button>
+                  <button class="carousel-btn carousel-next" onclick="navigateCarousel(event, 1)" style="position: absolute; top: 50%; right: 1rem; transform: translateY(-50%); background: rgba(255, 255, 255, 0.9); border: none; width: 48px; height: 48px; border-radius: 50%; font-size: 2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">›</button>
+                  <div class="carousel-indicators" style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.75rem; z-index: 10;">
+                    ${images.map((_, i) => `<span class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}" onclick="navigateCarouselDirect(event, ${i})" style="width: 12px; height: 12px; border-radius: 50%; background: ${i === 0 ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.6)'}; cursor: pointer; transition: all 0.2s ease; border: 1px solid rgba(0,0,0,0.1); ${i === 0 ? 'width: 32px; border-radius: 6px;' : ''}"></span>`).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            `
             : `<div class="product-icon-large" style="font-size: 8rem;">${product.icon || '📦'}</div>`
           }
-          ${discount > 0 ? `<div class="product-discount" style="position: absolute; top: 1rem; right: 1rem; background: var(--color-danger); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 700; font-size: 1.125rem;">-${discount}%</div>` : ''}
-          ${product.featured ? `<div style="position: absolute; top: 1rem; left: 1rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;"><span>⭐</span> Featured</div>` : ''}
+          ${discount > 0 ? `<div class="product-discount" style="position: absolute; top: 1rem; right: 1rem; background: var(--color-danger); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 700; font-size: 1.125rem; z-index: 11;">-${discount}%</div>` : ''}
+          ${product.featured ? `<div style="position: absolute; top: 1rem; left: 1rem; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; z-index: 11;"><span>⭐</span> Featured</div>` : ''}
         </div>
       </div>
 
