@@ -540,6 +540,9 @@ function navigateTo(page, data = null) {
   }
 }
 
+// Expose navigateTo globally for onclick handlers
+window.navigateTo = navigateTo;
+
 // Search Functionality
 function initSearchFunctionality() {
   const searchInput = document.getElementById('search-input');
