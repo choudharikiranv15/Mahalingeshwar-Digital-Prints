@@ -1052,10 +1052,25 @@ function createProductCard(product) {
   
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
   
+  // Handle multiple images with carousel
+  const images = product.images || (product.imageUrl ? [product.imageUrl] : []);
+  const hasImages = images.length > 0;
+
   card.innerHTML = `
     <div class="product-image">
-      ${product.imageUrl
-        ? `<img src="${product.imageUrl}" alt="${product.name}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem;">`
+      ${hasImages
+        ? `
+          <div class="product-image-carousel" data-images='${JSON.stringify(images)}'>
+            <img src="${images[0]}" alt="${product.name}" class="carousel-image" style="width: 100%; height: 200px; object-fit: cover; border-radius: 0.5rem;">
+            ${images.length > 1 ? `
+              <button class="carousel-btn carousel-prev" onclick="navigateCarousel(event, -1)">‹</button>
+              <button class="carousel-btn carousel-next" onclick="navigateCarousel(event, 1)">›</button>
+              <div class="carousel-indicators">
+                ${images.map((_, i) => `<span class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `
         : `<div class="product-icon" style="font-size: 3.5rem;">${product.icon || '📦'}</div>`
       }
       ${discount > 0 ? `<div class="product-discount">-${discount}%</div>` : ''}
@@ -1080,6 +1095,36 @@ function createProductCard(product) {
   
   return card;
 }
+
+// Image Carousel Navigation for Products
+window.navigateCarousel = function(event, direction) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const carousel = event.target.closest('.product-image-carousel');
+  if (!carousel) return;
+
+  const images = JSON.parse(carousel.dataset.images);
+  const img = carousel.querySelector('.carousel-image');
+  const dots = carousel.querySelectorAll('.carousel-dot');
+
+  // Find current index
+  let currentIndex = 0;
+  dots.forEach((dot, i) => {
+    if (dot.classList.contains('active')) currentIndex = i;
+  });
+
+  // Calculate new index
+  let newIndex = currentIndex + direction;
+  if (newIndex < 0) newIndex = images.length - 1;
+  if (newIndex >= images.length) newIndex = 0;
+
+  // Update image and dots
+  img.src = images[newIndex];
+  dots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === newIndex);
+  });
+};
 
 // Page Loading Functions
 function loadHomePage() {

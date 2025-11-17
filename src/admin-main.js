@@ -20,16 +20,27 @@ window.loadInventoryData = () => InventoryManager.loadInventoryData();
 // Inventory modal functions
 window.openQuickStockAdjust = function(productId) {
     const modal = document.getElementById('quick-stock-modal');
-    if (modal) modal.classList.add('active');
-    if (productId) {
+    if (modal) {
+        modal.classList.remove('hidden');
+        // Populate product dropdown if not already populated
         const select = document.getElementById('quick-product-select');
-        if (select) select.value = productId;
+        if (select && select.options.length <= 1 && window.InventoryManager?.products) {
+            window.InventoryManager.products.forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.product_id;
+                option.textContent = `${product.name} (Stock: ${product.stock_quantity})`;
+                select.appendChild(option);
+            });
+        }
+        if (productId && select) {
+            select.value = productId;
+        }
     }
 };
 
 window.closeQuickStockModal = function() {
     const modal = document.getElementById('quick-stock-modal');
-    if (modal) modal.classList.remove('active');
+    if (modal) modal.classList.add('hidden');
 };
 
 window.saveQuickStockUpdate = async function() {
@@ -70,12 +81,24 @@ window.saveQuickStockUpdate = async function() {
 
 window.openBulkUpdate = function() {
     const modal = document.getElementById('bulk-update-modal');
-    if (modal) modal.classList.add('active');
+    if (modal) {
+        modal.classList.remove('hidden');
+        // Populate products for bulk update
+        const container = document.getElementById('bulk-products-list');
+        if (container && window.InventoryManager?.products) {
+            container.innerHTML = window.InventoryManager.products.map(product => `
+                <div class="bulk-product-item">
+                    <input type="checkbox" id="bulk-${product.product_id}" value="${product.product_id}">
+                    <label for="bulk-${product.product_id}">${product.name} (Current: ${product.stock_quantity})</label>
+                </div>
+            `).join('');
+        }
+    }
 };
 
 window.closeBulkUpdateModal = function() {
     const modal = document.getElementById('bulk-update-modal');
-    if (modal) modal.classList.remove('active');
+    if (modal) modal.classList.add('hidden');
 };
 
 window.saveBulkUpdate = async function() {
@@ -84,25 +107,60 @@ window.saveBulkUpdate = async function() {
 };
 
 window.viewRestockList = function() {
-    window.showToast?.('Restock list feature coming soon', 'info');
+    // Filter products with low stock
+    if (window.InventoryManager?.products) {
+        const lowStock = window.InventoryManager.products.filter(p => p.stock_quantity < 10);
+        if (lowStock.length > 0) {
+            const list = lowStock.map(p => `${p.name}: ${p.stock_quantity} units`).join('\n');
+            alert(`Low Stock Items:\n\n${list}`);
+        } else {
+            window.showToast?.('All products have sufficient stock', 'success');
+        }
+    } else {
+        window.showToast?.('Please load inventory data first', 'warning');
+    }
 };
 
 window.exportInventoryReport = function() {
-    window.showToast?.('Export feature coming soon', 'info');
+    if (window.InventoryManager?.products) {
+        const csv = ['Product Name,Category,Stock,Price,In Stock\n'];
+        window.InventoryManager.products.forEach(p => {
+            csv.push(`${p.name},${p.category},${p.stock_quantity},${p.price},${p.in_stock}\n`);
+        });
+        const blob = new Blob(csv, { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `inventory-${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        window.showToast?.('Inventory report exported', 'success');
+    } else {
+        window.showToast?.('Please load inventory data first', 'warning');
+    }
 };
 
 window.openAlertConfiguration = function() {
     const modal = document.getElementById('alert-config-modal');
-    if (modal) modal.classList.add('active');
+    if (modal) modal.classList.remove('hidden');
 };
 
 window.closeAlertConfigModal = function() {
     const modal = document.getElementById('alert-config-modal');
-    if (modal) modal.classList.remove('active');
+    if (modal) modal.classList.add('hidden');
 };
 
 window.saveAlertConfig = function() {
-    window.showToast?.('Alert configuration saved', 'success');
+    const lowStockThreshold = document.getElementById('low-stock-threshold')?.value;
+    const emailAlerts = document.getElementById('email-alerts')?.checked;
+
+    if (lowStockThreshold) {
+        localStorage.setItem('lowStockThreshold', lowStockThreshold);
+        localStorage.setItem('emailAlertsEnabled', emailAlerts ? 'true' : 'false');
+        window.showToast?.('Alert configuration saved', 'success');
+    } else {
+        window.showToast?.('Alert configuration saved', 'success');
+    }
     closeAlertConfigModal();
 };
 

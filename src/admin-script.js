@@ -52,8 +52,8 @@ function initializeEventListeners() {
     // Product form
     document.getElementById('product-form')?.addEventListener('submit', handleProductSubmit);
 
-    // Image preview
-    document.getElementById('product-image')?.addEventListener('change', handleImagePreview);
+    // Multiple image previews
+    document.getElementById('product-images')?.addEventListener('change', handleMultipleImagePreviews);
 
     // Search products
     document.getElementById('search-products')?.addEventListener('input', handleProductSearch);
@@ -290,11 +290,14 @@ async function handleProductSubmit(e) {
     try {
         const formData = getProductFormData();
 
-        // Upload image if selected
-        let imageUrl = null;
-        const imageFile = document.getElementById('product-image').files[0];
-        if (imageFile) {
-            imageUrl = await uploadProductImage(imageFile, formData.product_id);
+        // Upload multiple images if selected
+        let imageUrls = [];
+        if (selectedImageFiles.length > 0) {
+            showToast(`Uploading ${selectedImageFiles.length} images...`, 'info');
+            for (const file of selectedImageFiles) {
+                const url = await uploadProductImage(file, formData.product_id);
+                if (url) imageUrls.push(url);
+            }
         }
 
         const productData = {
@@ -307,7 +310,8 @@ async function handleProductSubmit(e) {
             reviews: parseInt(formData.reviews),
             description: formData.description,
             icon: formData.icon || '📦',
-            image_url: imageUrl,
+            image_url: imageUrls.length > 0 ? imageUrls[0] : null, // Keep backward compatibility
+            images: imageUrls.length > 0 ? imageUrls : null, // New field for multiple images
             featured: formData.featured,
             in_stock: formData.in_stock,
             stock_quantity: parseInt(formData.stock_quantity),
@@ -468,9 +472,21 @@ function resetProductForm() {
     document.getElementById('product-form-title').textContent = 'Add New Product';
     document.getElementById('submit-btn-text').textContent = 'Add Product';
 
+    // Clear old single image preview (backward compatibility)
     const preview = document.getElementById('image-preview');
-    preview.innerHTML = '';
-    preview.classList.remove('active');
+    if (preview) {
+        preview.innerHTML = '';
+        preview.classList.remove('active');
+    }
+
+    // Clear multiple image previews
+    const previewsContainer = document.getElementById('image-previews');
+    if (previewsContainer) {
+        previewsContainer.innerHTML = '';
+    }
+
+    // Reset selected files array
+    selectedImageFiles = [];
 }
 
 // =====================================================
@@ -489,6 +505,67 @@ function handleImagePreview(e) {
     };
     reader.readAsDataURL(file);
 }
+
+// State to track selected images for upload
+let selectedImageFiles = [];
+
+function handleMultipleImagePreviews(e) {
+    const files = Array.from(e.target.files);
+
+    // Limit to 5 images max
+    if (files.length > 5) {
+        showToast('Maximum 5 images allowed', 'warning');
+        return;
+    }
+
+    selectedImageFiles = files;
+    const previewContainer = document.getElementById('image-previews');
+    previewContainer.innerHTML = '';
+
+    files.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'image-preview-item';
+            previewItem.innerHTML = `
+                <img src="${event.target.result}" alt="Preview ${index + 1}">
+                <button class="remove-image" onclick="removeImagePreview(${index})" type="button">×</button>
+                <span class="image-order">#${index + 1}</span>
+            `;
+            previewContainer.appendChild(previewItem);
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+// Expose for onclick handler
+window.removeImagePreview = function(index) {
+    selectedImageFiles.splice(index, 1);
+
+    // Re-render previews
+    const previewContainer = document.getElementById('image-previews');
+    previewContainer.innerHTML = '';
+
+    selectedImageFiles.forEach((file, i) => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const previewItem = document.createElement('div');
+            previewItem.className = 'image-preview-item';
+            previewItem.innerHTML = `
+                <img src="${event.target.result}" alt="Preview ${i + 1}">
+                <button class="remove-image" onclick="removeImagePreview(${i})" type="button">×</button>
+                <span class="image-order">#${i + 1}</span>
+            `;
+            previewContainer.appendChild(previewItem);
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Update file input
+    const dataTransfer = new DataTransfer();
+    selectedImageFiles.forEach(file => dataTransfer.items.add(file));
+    document.getElementById('product-images').files = dataTransfer.files;
+};
 
 async function uploadProductImage(file, productId) {
     try {
