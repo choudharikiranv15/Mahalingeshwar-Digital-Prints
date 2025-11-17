@@ -1504,9 +1504,13 @@ document.addEventListener('DOMContentLoaded', function() {
 console.log('✅ Admin script loaded successfully');
 
 // Expose functions used by inline onclick handlers
+window.navigateToSection = navigateToSection;
+window.resetProductForm = resetProductForm;
 window.editProduct = editProduct;
 window.deleteProduct = deleteProduct;
+window.loadOrders = loadOrders;
 window.viewOrderDetail = viewOrderDetail;
+window.closeOrderModal = closeOrderModal;
 window.updateOrderStatus = updateOrderStatus;
 window.copyWhatsAppMessage = copyWhatsAppMessage;
 window.copyWhatsAppTemplate = copyWhatsAppTemplate;
@@ -1518,20 +1522,16 @@ window.closeOfferModal = closeOfferModal;
 window.approveReview = approveReview;
 window.toggleFeatured = toggleFeatured;
 window.deleteReviewConfirm = deleteReviewConfirm;
+window.switchReviewTab = switchReviewTab;
+window.showGenerateLinkModal = showGenerateLinkModal;
+window.closeGenerateLinkModal = closeGenerateLinkModal;
+window.copyReviewLink = copyReviewLink;
+window.testSupabaseConnection = testSupabaseConnection;
+window.toggleTheme = toggleTheme;
+window.loadSiteStats = loadSiteStats;
 
 // Export functions for use by other admin modules
 export {
     showToast,
     showLoading
 };
-
-// Placeholder exports for inventory module functions (if they exist elsewhere or need to be implemented)
-export const openQuickStockAdjust = window.openQuickStockAdjust || (() => console.warn('openQuickStockAdjust not implemented'));
-export const closeQuickStockModal = window.closeQuickStockModal || (() => console.warn('closeQuickStockModal not implemented'));
-export const openBulkUpdate = window.openBulkUpdate || (() => console.warn('openBulkUpdate not implemented'));
-export const closeBulkUpdateModal = window.closeBulkUpdateModal || (() => console.warn('closeBulkUpdateModal not implemented'));
-export const viewRestockList = window.viewRestockList || (() => console.warn('viewRestockList not implemented'));
-export const exportInventoryReport = window.exportInventoryReport || (() => console.warn('exportInventoryReport not implemented'));
-export const openAlertConfiguration = window.openAlertConfiguration || (() => console.warn('openAlertConfiguration not implemented'));
-export const closeAlertConfigModal = window.closeAlertConfigModal || (() => console.warn('closeAlertConfigModal not implemented'));
-export const saveAlertConfig = window.saveAlertConfig || (() => console.warn('saveAlertConfig not implemented'));

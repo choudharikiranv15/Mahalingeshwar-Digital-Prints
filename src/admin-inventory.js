@@ -3,7 +3,7 @@
 // =====================================================
 
 import { SupabaseService } from './supabase-service.js';
-import { showLoading, showToast, openQuickStockAdjust, closeQuickStockModal, openBulkUpdate, closeBulkUpdateModal, viewRestockList, exportInventoryReport, openAlertConfiguration, closeAlertConfigModal, saveAlertConfig } from './admin-script.js'; // Assuming these functions are exported from admin-script.js
+import { showLoading, showToast } from './admin-script.js';
 
 export const InventoryManager = {
     products: [],
