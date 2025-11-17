@@ -153,6 +153,15 @@ function navigateToSection(section) {
     }
 
     AdminState.currentSection = section;
+
+    // Initialize section-specific modules
+    if (section === 'analytics' && window.AnalyticsManager && !window.AnalyticsManager.analyticsData) {
+        console.log('Initializing Analytics...');
+        window.AnalyticsManager.init();
+    } else if (section === 'inventory' && window.InventoryManager && !window.InventoryManager.products?.length) {
+        console.log('Initializing Inventory...');
+        window.InventoryManager.init();
+    }
 }
 
 // =====================================================
