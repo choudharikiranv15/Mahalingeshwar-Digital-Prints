@@ -12,6 +12,12 @@
   NPM_FLAGS = "--include=dev"
   NPM_CONFIG_PRODUCTION = "false"
 
+# Admin page redirect
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
 # Redirect rules for Single Page Application
 [[redirects]]
   from = "/*"

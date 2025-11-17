@@ -3116,6 +3116,7 @@ body {
 
   .footer-section h4 {
     font-size: var(--font-size-base);
+    margin-bottom: var(--space-12);
   }
 
   .footer-links {
@@ -3124,6 +3125,35 @@ body {
 
   .footer-links li {
     margin-bottom: var(--space-8);
+  }
+
+  /* Footer contact items */
+  .contact-info-item {
+    gap: var(--space-10);
+    padding: var(--space-8) var(--space-6);
+    margin-bottom: var(--space-12);
+  }
+
+  .contact-info-item .contact-icon {
+    font-size: var(--font-size-base);
+    min-width: 20px;
+    flex-shrink: 0;
+  }
+
+  .contact-text {
+    font-size: 11px;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .contact-text strong {
+    display: block;
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-xs);
+  }
+
+  .footer-contact {
+    margin-bottom: var(--space-16);
   }
 
   .social-links {
