@@ -540,8 +540,13 @@ function navigateTo(page, data = null) {
   }
 }
 
-// Expose navigateTo globally for onclick handlers
+// Expose core cart/route helpers globally for inline handlers
 window.navigateTo = navigateTo;
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.updateCartQuantity = updateCartQuantity;
+window.showCustomerModal = showCustomerModal;
+window.closeCustomerModal = closeCustomerModal;
 
 // Search Functionality
 function initSearchFunctionality() {
