@@ -719,9 +719,27 @@ function showCustomerModal() {
   if (modal) {
     modal.classList.remove('hidden');
     
+    // Auto-fill from localStorage if available
+    const savedData = localStorage.getItem('mh_customer_data');
+    if (savedData) {
+      try {
+        const data = JSON.parse(savedData);
+        if (data.name) document.getElementById('customer-name').value = data.name;
+        if (data.phone) document.getElementById('customer-phone').value = data.phone;
+        if (data.email) document.getElementById('customer-email').value = data.email;
+        if (data.address) document.getElementById('customer-address').value = data.address;
+      } catch (e) {
+        console.error('Failed to parse saved customer data', e);
+      }
+    }
+
     setTimeout(() => {
       const firstInput = document.getElementById('customer-name');
-      if (firstInput) firstInput.focus();
+      if (firstInput && !firstInput.value) {
+        firstInput.focus();
+      } else {
+        document.getElementById('special-instructions')?.focus();
+      }
     }, 300);
   }
 }
@@ -802,12 +820,21 @@ async function sendWhatsAppOrderWithDetails() {
       total: total
     };
 
-    const savedOrder = await SupabaseService.createOrder(orderData);
-    console.log('✅ Order saved to database:', savedOrder);
+    // Save for future orders
+    localStorage.setItem('mh_customer_data', JSON.stringify({
+      name: customerData.name,
+      phone: customerData.phone,
+      email: customerData.email,
+      address: customerData.address
+    }));
+
+    // Fire & Forget: Do not await Supabase request to ensure browser popups are not blocked
+    SupabaseService.createOrder(orderData)
+      .then(savedOrder => console.log('✅ Order saved to database:', savedOrder))
+      .catch(error => console.error('⚠️ Error saving order to database:', error));
 
   } catch (error) {
-    console.error('⚠️ Error saving order to database:', error);
-    // Continue anyway - still send to WhatsApp even if DB save fails
+    console.error('⚠️ Error processing order state:', error);
   }
 
   // Generate WhatsApp message
